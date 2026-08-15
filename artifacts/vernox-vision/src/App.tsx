@@ -4,7 +4,7 @@ import { ErrorBoundary } from '@/components/error-boundary';
 import { Toaster } from '@/components/ui/toaster';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import NotFound from '@/pages/not-found';
-import { ArrowDown, ArrowRight, Check, ChevronDown, CircleAlert, FileArchive, Film, FolderOpen, LockKeyhole, Menu, Play, Sparkles, X, Zap } from 'lucide-react';
+import { ArrowDown, ArrowRight, Check, ChevronDown, CircleAlert, FileArchive, Film, FolderOpen, LockKeyhole, Menu, Sparkles, X, Zap } from 'lucide-react';
 import introVideo from '@assets/My_Friend_Arjun_is_going_to_do_1786815898204.mp4';
 import {
   Link,
@@ -81,37 +81,30 @@ function BuyButton({ compact = false }: { compact?: boolean }) {
 }
 
 function IntroSequence({ onReveal }: { onReveal: () => void }) {
-  const [stage, setStage] = useState<'gate' | 'video' | 'loading' | 'done'>('gate');
-  const [progress, setProgress] = useState(0);
+  const [stage, setStage] = useState<'video' | 'done'>('video');
   const videoRef = useRef<HTMLVideoElement>(null);
-  const startVideo = () => { setStage('video'); window.setTimeout(() => videoRef.current?.play().catch(() => setStage('gate')), 40); };
+  const reveal = () => { setStage('done'); onReveal(); };
   useEffect(() => {
-    if (stage !== 'loading') return;
-    const started = Date.now();
-    const timer = window.setInterval(() => {
-      const next = Math.min(100, ((Date.now() - started) / 10000) * 100);
-      setProgress(next);
-      if (next >= 100) { window.clearInterval(timer); setStage('done'); onReveal(); }
-    }, 50);
-    return () => window.clearInterval(timer);
-  }, [stage, onReveal]);
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = true;
+    video.play().catch(reveal);
+  }, []);
   if (stage === 'done') return null;
   return (
-    <div className={`fixed inset-0 z-[100] overflow-hidden bg-[hsl(232_31%_7%)] ${stage === 'loading' ? 'site-grid' : ''}`} data-testid={`intro-${stage}`}>
-      {stage === 'gate' && <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
-        <div className="eyebrow mb-6 text-[hsl(var(--primary))]">Vernox Vision / private archive</div>
-        <div className="mb-9 flex h-20 w-20 items-center justify-center rounded-full border border-[hsl(var(--primary)/.5)] text-[hsl(var(--primary))]"><Play size={24} fill="currentColor" /></div>
-        <h1 className="display max-w-sm text-4xl text-[hsl(var(--foreground))] sm:text-6xl">Enter the archive.</h1>
-        <p className="mt-4 max-w-xs text-sm leading-6 text-[hsl(var(--muted-foreground))]">A short film, then a room full of footage. Sound is on.</p>
-        <button onClick={startVideo} className="button-lift mt-8 rounded-full border border-[hsl(var(--primary)/.7)] px-7 py-3 text-sm font-semibold text-[hsl(var(--primary))] hover:bg-[hsl(var(--primary))] hover:text-[hsl(var(--primary-foreground))]" data-testid="button-enter-site">Tap to start</button>
-      </div>}
-      {stage === 'video' && <video ref={videoRef} src={introVideo} onEnded={() => setStage('loading')} onError={() => setStage('loading')} className="h-full w-full object-cover" playsInline controls={false} data-testid="video-intro" />}
-      {stage === 'loading' && <div className="flex h-full flex-col items-center justify-center px-6 text-center">
-        <div className="relative mb-8 flex h-24 w-24 items-center justify-center"><div className="loader-ring absolute inset-0 rounded-full border border-[hsl(var(--primary)/.2)] border-t-[hsl(var(--primary))]" /><span className="mono text-2xl text-[hsl(var(--primary))]">{Math.round(progress).toString().padStart(2, '0')}</span></div>
-        <div className="eyebrow mb-3 text-[hsl(var(--primary))]">Preparing your drop</div><p className="text-sm text-[hsl(var(--muted-foreground))]">The archive is opening. Hold tight.</p>
-        <div className="mt-8 h-px w-48 overflow-hidden bg-[hsl(var(--border))] sm:w-72"><div className="h-full bg-[hsl(var(--primary))] transition-[width] duration-100" style={{ width: `${progress}%` }} /></div>
-        <p className="mono mt-3 text-[10px] uppercase tracking-[.18em] text-[hsl(var(--muted-foreground))]">Loader container ready for supplied visual asset</p>
-      </div>}
+    <div className="fixed inset-0 z-[100] overflow-hidden bg-[hsl(232_31%_7%)]" data-testid="intro-video">
+      <video
+        ref={videoRef}
+        src={introVideo}
+        autoPlay
+        muted
+        playsInline
+        controls={false}
+        onEnded={reveal}
+        onError={reveal}
+        className="h-full w-full object-cover"
+        data-testid="video-intro"
+      />
     </div>
   );
 }
