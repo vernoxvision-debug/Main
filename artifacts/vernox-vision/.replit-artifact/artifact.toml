@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Vernox Vision"
+description = "A high-converting, mobile-first sales site for Vernox Vision's one-time video bundle offer, with a cinematic intro sequence, Gumroad-ready purchase flow, policy pages, and conversion tracking scaffolding."
+version = "1.0.0"
+id = "artifacts/vernox-vision"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24219
+
+[services.development]
+run = "pnpm --filter @workspace/vernox-vision run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/vernox-vision", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/vernox-vision/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24219"
+BASE_PATH = "/"

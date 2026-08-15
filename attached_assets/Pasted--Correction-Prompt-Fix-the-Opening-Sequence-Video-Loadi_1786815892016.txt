@@ -1,0 +1,46 @@
+# Correction Prompt — Fix the Opening Sequence (Video → Loading → Landing Page)
+
+Send this as a follow-up to correct the earlier build. The previous prompt assumed the loading screen was the very first thing visitors see — that's wrong. Here's the actual required sequence:
+
+---
+
+## Correct Flow (replace whatever was built before)
+
+```
+1. Visitor lands on the site
+        ↓
+2. My custom VIDEO plays (full-screen)
+        ↓
+3. Video ends → 10-SECOND LOADING SCREEN appears (using my existing loading visual asset)
+        ↓
+4. Loading screen ends → LANDING PAGE (hero, CTA, etc.) fades/reveals in
+```
+
+The video is **not** background decoration and it is **not** the loading screen — it's a separate full-screen intro step that plays first, before the loading screen even appears. Please rebuild the intro sequence with this exact order, don't merge steps 2 and 3.
+
+---
+
+## Build Requirements
+
+**Step 1 — Video Intro**
+- Full-screen video player, my video file plays automatically on load
+- Note: browsers block autoplay-with-sound until the user interacts with the page. If my video has audio, add a simple "Tap to Start" / "Enter Site" click gate before playback begins — one tap, then video plays with sound. If the video is silent/muted, true autoplay is fine and this gate can be skipped. **[CONFIRM: does the video have audio?]**
+- No skip button unless I ask for one — the video should play in full
+- Video should be compressed/optimized for web so it doesn't kill page load speed (this matters a lot since traffic is coming from Meta ads — slow-loading video intros increase bounce rate and hurt ad performance)
+
+**Step 2 — 10-Second Loading Screen**
+- Triggers immediately when the video ends
+- Uses my existing loading screen visual asset (already provided in the earlier prompt — do not generate a new one)
+- Runs for exactly 10 seconds, then auto-transitions — no user action needed
+- Smooth fade/transition into the loading screen, and a smooth fade/transition out of it
+
+**Step 3 — Landing Page Reveal**
+- After the 10 seconds, the actual landing page (hero, "Buy Now for $9" CTA, everything from the original prompt) fades or slides into view
+- Meta Pixel `PageView` should fire when the page first loads (step 1), not delayed until step 3 — so ad tracking isn't affected by the intro sequence
+- `ViewContent` event still fires once the hero/offer section becomes visible (i.e., after step 3 completes)
+
+---
+
+## One thing to flag
+
+A video intro + 10-second forced loading screen adds real time before a visitor can even see the offer or hit "Buy Now." For cold Meta ad traffic, every extra second before the CTA is visible tends to increase drop-off — so it's worth deciding whether the full video should play every visit, or whether it should be shown once per session (e.g. skipped on repeat visits/page reloads using a simple session flag), so returning visitors or people re-clicking the ad aren't forced to sit through the whole sequence again. Let me know if you want that added — it's a small addition once the base sequence works.
