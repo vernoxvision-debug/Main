@@ -139,9 +139,18 @@ function BuyButton({ compact = false }: { compact?: boolean }) {
 function IntroSequence({ onReveal }: { onReveal: () => void }) {
   const [visible, setVisible] = useState(true);
   const [fading, setFading] = useState(false);
-  const mobileVideoRef = useRef<HTMLVideoElement>(null);
-  const desktopVideoRef = useRef<HTMLVideoElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const completed = useRef(false);
+
+  // Check if current device or viewport is mobile (< 768px or portrait tablet)
+  const [isMobile, setIsMobile] = useState<boolean>(() => {
+    if (typeof window === 'undefined') return false;
+    return (
+      window.innerWidth < 768 ||
+      window.matchMedia('(max-width: 768px)').matches ||
+      (window.matchMedia('(orientation: portrait)').matches && window.innerWidth <= 1024)
+    );
+  });
 
   const handleFinish = () => {
     if (completed.current) return;
@@ -154,46 +163,46 @@ function IntroSequence({ onReveal }: { onReveal: () => void }) {
   };
 
   useEffect(() => {
-    const isMobile = typeof window !== 'undefined' && (
-      window.innerWidth < 768 ||
-      window.matchMedia('(max-width: 768px)').matches ||
-      (window.matchMedia('(orientation: portrait)').matches && window.innerWidth <= 1024)
-    );
+    const handleResize = () => {
+      const mob = (
+        window.innerWidth < 768 ||
+        window.matchMedia('(max-width: 768px)').matches ||
+        (window.matchMedia('(orientation: portrait)').matches && window.innerWidth <= 1024)
+      );
+      setIsMobile(mob);
+    };
 
-    const activeVid = isMobile ? mobileVideoRef.current : desktopVideoRef.current;
-    const inactiveVid = isMobile ? desktopVideoRef.current : mobileVideoRef.current;
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
-    if (inactiveVid) {
-      try {
-        inactiveVid.pause();
-      } catch {
-        // ignore
-      }
-    }
-
-    if (activeVid) {
-      activeVid.defaultMuted = true;
-      activeVid.muted = true;
-      activeVid.setAttribute('muted', '');
-      activeVid.setAttribute('playsinline', '');
-      activeVid.setAttribute('webkit-playsinline', '');
-      const playPromise = activeVid.play();
+  useEffect(() => {
+    const vid = videoRef.current;
+    if (vid) {
+      vid.defaultMuted = true;
+      vid.muted = true;
+      vid.setAttribute('muted', '');
+      vid.setAttribute('playsinline', '');
+      vid.setAttribute('webkit-playsinline', '');
+      const playPromise = vid.play();
       if (playPromise !== undefined) {
         playPromise.catch(() => {
-          handleFinish();
+          // If browser policy blocks autoplay, allow fallback without crashing
         });
       }
     }
 
-    // Safety fallback timer in case of slow decoder or playback blocker
+    // Safety fallback timer: videos are 10.0s, give 12s so it plays to completion
     const timer = setTimeout(() => {
       handleFinish();
-    }, 7000);
+    }, 12000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [isMobile]);
 
   if (!visible) return null;
+
+  const currentVideoSrc = isMobile ? mobileIntroVideo : introVideo;
 
   return (
     <div
@@ -203,36 +212,18 @@ function IntroSequence({ onReveal }: { onReveal: () => void }) {
       style={{ willChange: 'opacity' }}
       data-testid="intro-video"
     >
-      {/* Mobile Vertical Intro Video (Visible exclusively on phones and mobile viewports) */}
       <video
-        ref={mobileVideoRef}
-        key="mobile-intro-video"
-        src={mobileIntroVideo}
+        ref={videoRef}
+        key={isMobile ? 'mobile-intro-video' : 'desktop-intro-video'}
+        src={currentVideoSrc}
         autoPlay
         muted
         playsInline
         preload="auto"
         controls={false}
         onEnded={handleFinish}
-        onError={handleFinish}
-        className="h-full w-full object-cover block md:hidden"
-        data-testid="video-intro-mobile"
-      />
-
-      {/* Desktop Widescreen Intro Video (Visible exclusively on laptops/desktops) */}
-      <video
-        ref={desktopVideoRef}
-        key="desktop-intro-video"
-        src={introVideo}
-        autoPlay
-        muted
-        playsInline
-        preload="auto"
-        controls={false}
-        onEnded={handleFinish}
-        onError={handleFinish}
-        className="h-full w-full object-cover hidden md:block"
-        data-testid="video-intro-desktop"
+        className="h-full w-full object-cover"
+        data-testid={isMobile ? 'video-intro-mobile' : 'video-intro-desktop'}
       />
 
       <button
