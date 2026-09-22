@@ -139,15 +139,9 @@ function BuyButton({ compact = false }: { compact?: boolean }) {
 function IntroSequence({ onReveal }: { onReveal: () => void }) {
   const [visible, setVisible] = useState(true);
   const [fading, setFading] = useState(false);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const mobileVideoRef = useRef<HTMLVideoElement>(null);
+  const desktopVideoRef = useRef<HTMLVideoElement>(null);
   const completed = useRef(false);
-
-  const [activeVideoSrc, setActiveVideoSrc] = useState<string>(() => {
-    if (typeof window !== 'undefined') {
-      return window.matchMedia('(max-width: 768px)').matches ? mobileIntroVideo : introVideo;
-    }
-    return introVideo;
-  });
 
   const handleFinish = () => {
     if (completed.current) return;
@@ -160,23 +154,30 @@ function IntroSequence({ onReveal }: { onReveal: () => void }) {
   };
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const mql = window.matchMedia('(max-width: 768px)');
-    const handleMediaChange = (e: MediaQueryListEvent) => {
-      if (!completed.current) {
-        setActiveVideoSrc(e.matches ? mobileIntroVideo : introVideo);
-      }
-    };
-    mql.addEventListener('change', handleMediaChange);
-    return () => mql.removeEventListener('change', handleMediaChange);
-  }, []);
+    const isMobile = typeof window !== 'undefined' && (
+      window.innerWidth < 768 ||
+      window.matchMedia('(max-width: 768px)').matches ||
+      (window.matchMedia('(orientation: portrait)').matches && window.innerWidth <= 1024)
+    );
 
-  useEffect(() => {
-    const video = videoRef.current;
-    if (video) {
-      video.muted = true;
-      video.playsInline = true;
-      const playPromise = video.play();
+    const activeVid = isMobile ? mobileVideoRef.current : desktopVideoRef.current;
+    const inactiveVid = isMobile ? desktopVideoRef.current : mobileVideoRef.current;
+
+    if (inactiveVid) {
+      try {
+        inactiveVid.pause();
+      } catch {
+        // ignore
+      }
+    }
+
+    if (activeVid) {
+      activeVid.defaultMuted = true;
+      activeVid.muted = true;
+      activeVid.setAttribute('muted', '');
+      activeVid.setAttribute('playsinline', '');
+      activeVid.setAttribute('webkit-playsinline', '');
+      const playPromise = activeVid.play();
       if (playPromise !== undefined) {
         playPromise.catch(() => {
           handleFinish();
@@ -184,13 +185,13 @@ function IntroSequence({ onReveal }: { onReveal: () => void }) {
       }
     }
 
-    // Safety fallback timer in case of slow decoder
+    // Safety fallback timer in case of slow decoder or playback blocker
     const timer = setTimeout(() => {
       handleFinish();
     }, 7000);
 
     return () => clearTimeout(timer);
-  }, [activeVideoSrc]);
+  }, []);
 
   if (!visible) return null;
 
@@ -202,9 +203,11 @@ function IntroSequence({ onReveal }: { onReveal: () => void }) {
       style={{ willChange: 'opacity' }}
       data-testid="intro-video"
     >
+      {/* Mobile Vertical Intro Video (Visible exclusively on phones and mobile viewports) */}
       <video
-        ref={videoRef}
-        src={activeVideoSrc}
+        ref={mobileVideoRef}
+        key="mobile-intro-video"
+        src={mobileIntroVideo}
         autoPlay
         muted
         playsInline
@@ -212,9 +215,26 @@ function IntroSequence({ onReveal }: { onReveal: () => void }) {
         controls={false}
         onEnded={handleFinish}
         onError={handleFinish}
-        className="h-full w-full object-cover"
-        data-testid="video-intro"
+        className="h-full w-full object-cover block md:hidden"
+        data-testid="video-intro-mobile"
       />
+
+      {/* Desktop Widescreen Intro Video (Visible exclusively on laptops/desktops) */}
+      <video
+        ref={desktopVideoRef}
+        key="desktop-intro-video"
+        src={introVideo}
+        autoPlay
+        muted
+        playsInline
+        preload="auto"
+        controls={false}
+        onEnded={handleFinish}
+        onError={handleFinish}
+        className="h-full w-full object-cover hidden md:block"
+        data-testid="video-intro-desktop"
+      />
+
       <button
         onClick={handleFinish}
         className="button-lift absolute right-4 top-4 sm:right-6 sm:top-6 z-10 flex items-center gap-1.5 rounded-full border border-white/20 bg-black/60 px-3.5 py-1.5 text-xs font-mono tracking-wider text-white/90 shadow-lg backdrop-blur-md hover:bg-black/90 hover:text-white"
