@@ -206,7 +206,7 @@ function IntroSequence({ onReveal }: { onReveal: () => void }) {
 
   return (
     <div
-      className={`fixed inset-0 z-[100] flex items-center justify-center bg-[hsl(232_31%_7%)] transition-opacity duration-600 ${
+      className={`fixed inset-0 z-[100] flex items-center justify-center bg-black transition-opacity duration-600 ${
         fading ? 'pointer-events-none opacity-0' : 'opacity-100'
       }`}
       style={{ willChange: 'opacity' }}
@@ -222,7 +222,7 @@ function IntroSequence({ onReveal }: { onReveal: () => void }) {
         preload="auto"
         controls={false}
         onEnded={handleFinish}
-        className="h-full w-full object-cover"
+        className="h-full w-full object-contain"
         data-testid={isMobile ? 'video-intro-mobile' : 'video-intro-desktop'}
       />
 
