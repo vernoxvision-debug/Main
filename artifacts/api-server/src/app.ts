@@ -35,10 +35,15 @@ app.use("/api", router);
 
 // Serve built frontend assets in production with SPA fallback
 const possibleDistPaths = [
+  path.resolve(process.cwd(), "artifacts/vernox-vision/dist"),
   path.resolve(process.cwd(), "artifacts/vernox-vision/dist/public"),
+  path.resolve(process.cwd(), "../vernox-vision/dist"),
   path.resolve(process.cwd(), "../vernox-vision/dist/public"),
+  path.resolve(process.cwd(), "dist"),
   path.resolve(process.cwd(), "dist/public"),
+  path.resolve(import.meta.dirname, "../../vernox-vision/dist"),
   path.resolve(import.meta.dirname, "../../vernox-vision/dist/public"),
+  path.resolve(import.meta.dirname, "../dist"),
   path.resolve(import.meta.dirname, "../dist/public"),
 ];
 
