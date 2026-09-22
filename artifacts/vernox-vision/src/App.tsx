@@ -30,6 +30,7 @@ import {
   Zap,
 } from 'lucide-react';
 import introVideo from '@assets/My_Friend_Arjun_is_going_to_do_1786815898204.mp4';
+import mobileIntroVideo from '@assets/Mobile_Intro.mp4';
 import {
   Link,
   Route,
@@ -141,6 +142,13 @@ function IntroSequence({ onReveal }: { onReveal: () => void }) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const completed = useRef(false);
 
+  const [activeVideoSrc, setActiveVideoSrc] = useState<string>(() => {
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(max-width: 768px)').matches ? mobileIntroVideo : introVideo;
+    }
+    return introVideo;
+  });
+
   const handleFinish = () => {
     if (completed.current) return;
     completed.current = true;
@@ -150,6 +158,18 @@ function IntroSequence({ onReveal }: { onReveal: () => void }) {
       setVisible(false);
     }, 600);
   };
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mql = window.matchMedia('(max-width: 768px)');
+    const handleMediaChange = (e: MediaQueryListEvent) => {
+      if (!completed.current) {
+        setActiveVideoSrc(e.matches ? mobileIntroVideo : introVideo);
+      }
+    };
+    mql.addEventListener('change', handleMediaChange);
+    return () => mql.removeEventListener('change', handleMediaChange);
+  }, []);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -167,10 +187,10 @@ function IntroSequence({ onReveal }: { onReveal: () => void }) {
     // Safety fallback timer in case of slow decoder
     const timer = setTimeout(() => {
       handleFinish();
-    }, 6000);
+    }, 7000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [activeVideoSrc]);
 
   if (!visible) return null;
 
@@ -184,7 +204,7 @@ function IntroSequence({ onReveal }: { onReveal: () => void }) {
     >
       <video
         ref={videoRef}
-        src={introVideo}
+        src={activeVideoSrc}
         autoPlay
         muted
         playsInline
