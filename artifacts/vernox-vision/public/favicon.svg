@@ -1,6 +1,7 @@
-<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="180" height="180" rx="40" fill="#0C0E17"/>
-  <rect x="2" y="2" width="176" height="176" rx="38" stroke="#CDFF00" stroke-opacity="0.3" stroke-width="4"/>
-  <path d="M48 56L78 126H92L122 56H104L85 106L66 56H48Z" fill="#CDFF00"/>
-  <circle cx="134" cy="56" r="8" fill="#CDFF00"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="4" fill="#0B0B0B" />
+  <!-- VV precision industrial mark -->
+  <polygon points="10,14 20,14 26,42 32,14 42,14 48,42 54,14 58,14 50,50 42,50 36,26 30,50 22,50" fill="#F4F4F2" />
+  <!-- Orange LED accent dot -->
+  <circle cx="54" cy="50" r="3" fill="#FF5A1F" />
 </svg>

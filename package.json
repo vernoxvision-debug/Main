@@ -3,13 +3,11 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "preinstall": "node -e \"if (!/pnpm/.test(process.env.npm_config_user_agent || '')) { console.error('Use pnpm instead'); process.exit(1); }\"",
+    "dev": "pnpm --filter @workspace/vernox-vision run dev",
     "build": "pnpm --filter @workspace/vernox-vision run build",
-    "build:all": "pnpm run typecheck && pnpm -r --if-present run build",
-    "typecheck:libs": "tsc --build",
-    "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck",
     "start": "pnpm --filter @workspace/vernox-vision run serve",
-    "serve": "pnpm --filter @workspace/vernox-vision run serve"
+    "serve": "pnpm --filter @workspace/vernox-vision run serve",
+    "test": "pnpm --filter @workspace/vernox-vision exec playwright test"
   },
   "private": true,
   "dependencies": {

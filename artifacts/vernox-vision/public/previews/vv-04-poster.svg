@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 960" width="540" height="960">
+  <rect width="540" height="960" fill="#20252B" />
+  <rect x="24" y="24" width="492" height="912" fill="none" stroke="#2D353E" stroke-width="1.5" />
+  
+  <text x="44" y="80" fill="#7C8894" font-family="monospace" font-size="12" letter-spacing="2">VV—04 // RICH VLOGS & OMEGLE</text>
+  <circle cx="488" cy="76" r="5" fill="#FF5A1F" />
+
+  <!-- Viewfinder reticle markings -->
+  <g transform="translate(170, 350)">
+    <rect x="10" y="10" width="180" height="180" fill="none" stroke="#3F4A57" stroke-width="2" />
+    <circle cx="100" cy="100" r="10" fill="#FF5A1F" />
+    <line x1="80" y1="100" x2="120" y2="100" stroke="#E0E6ED" stroke-width="2" />
+    <line x1="100" y1="80" x2="100" y2="120" stroke="#E0E6ED" stroke-width="2" />
+  </g>
+
+  <text x="270" y="280" text-anchor="middle" fill="#E0E6ED" font-family="'Archivo', sans-serif" font-weight="900" font-size="54" letter-spacing="-3">2,500+</text>
+  <text x="270" y="315" text-anchor="middle" fill="#7C8894" font-family="monospace" font-size="14" letter-spacing="3">CANDID STREET & VLOG B-ROLL</text>
+
+  <rect x="44" y="800" width="452" height="88" fill="#181C21" rx="2" />
+  <line x1="194" y1="800" x2="194" y2="888" stroke="#2D353E" stroke-width="1" />
+  <line x1="344" y1="800" x2="344" y2="888" stroke="#2D353E" stroke-width="1" />
+  
+  <text x="64" y="830" fill="#68737F" font-family="monospace" font-size="10">ASPECT</text>
+  <text x="64" y="856" fill="#E0E6ED" font-family="monospace" font-weight="bold" font-size="16">9:16 VERT</text>
+  <text x="214" y="830" fill="#68737F" font-family="monospace" font-size="10">FEEL</text>
+  <text x="214" y="856" fill="#E0E6ED" font-family="monospace" font-weight="bold" font-size="16">CANDID / RAW</text>
+  <text x="364" y="830" fill="#68737F" font-family="monospace" font-size="10">DELIVERY</text>
+  <text x="364" y="856" fill="#FF5A1F" font-family="monospace" font-weight="bold" font-size="16">DRIVE SYNC</text>
+</svg>

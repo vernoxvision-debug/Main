@@ -2,29 +2,86 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>Vernox Vision — 15,000+ Visual Assets for Creators</title>
-    <meta name="description" content="15,000+ usable video assets for creators, editors, and filmmakers. A private archive of visual momentum." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vernox Vision — 15,000+ Creator Video Asset Vault & Hardware System</title>
+    <meta
+      name="description"
+      content="15,000+ curated video assets, viral hooks, and creator frameworks delivered instantly via private Google Drive. $9.99 one-time. Commercial rights included."
+    />
     <meta name="robots" content="index, follow" />
-    <meta property="og:title" content="Vernox Vision — 15,000+ Visual Assets for Creators" />
-    <meta property="og:description" content="15,000+ usable video assets for creators, editors, and filmmakers. A private archive of visual momentum." />
-    <meta property="og:type" content="website" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Vernox Vision — 15,000+ Visual Assets for Creators" />
-    <meta name="twitter:description" content="15,000+ usable video assets for creators, editors, and filmmakers. A private archive of visual momentum." />
     <link rel="canonical" href="https://vernoxvision.com/" />
-    <meta name="theme-color" content="#0C0E17" />
-    <meta property="og:url" content="https://vernoxvision.com/" />
+    <meta name="theme-color" content="#F4F4F2" />
+    <script>
+      (function() {
+        try {
+          var mode = localStorage.getItem('vv_stage_mode');
+          if (mode === 'dark' || (!mode && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.setAttribute('data-stage-mode', 'dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    <!-- Open Graph -->
     <meta property="og:site_name" content="Vernox Vision" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Vernox Vision — 15,000+ Creator Video Asset Vault" />
+    <meta
+      property="og:description"
+      content="15,000+ curated video assets, viral hooks, and creator frameworks delivered instantly via private Google Drive. $9.99 one-time. Commercial rights included."
+    />
+    <meta property="og:url" content="https://vernoxvision.com/" />
+    <meta property="og:image" content="https://vernoxvision.com/previews/og-image.svg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Vernox Vision — 15,000+ Creator Video Asset Vault" />
+    <meta
+      name="twitter:description"
+      content="15,000+ curated video assets, viral hooks, and creator frameworks delivered instantly via private Google Drive. $9.99 one-time. Commercial rights included."
+    />
+    <meta name="twitter:image" content="https://vernoxvision.com/previews/og-image.svg" />
+
+    <!-- Favicon: Official Vernox Vision Logo -->
+    <link rel="icon" type="image/jpeg" href="/vernox-logo.jpeg" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://gumroad.com/js/gumroad.js"></script>
+    <link rel="apple-touch-icon" href="/vernox-logo.jpeg" />
+
+    <!-- Preload ONLY Archivo (the LCP font) -->
+    <link
+      rel="preload"
+      href="/fonts/archivo-variable.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+
+    <!-- Gumroad Overlay Integration -->
+    <script src="https://gumroad.com/js/gumroad.js" async></script>
+
+    <!-- JSON-LD Product Schema (Honest data only: no fake aggregateRating) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "name": "Vernox Vision Creator Asset Vault",
+        "description": "15,000+ curated video assets, viral hooks, and creator frameworks across 4 video bundles and 3 PDF guides, delivered via private Google Drive.",
+        "brand": {
+          "@type": "Brand",
+          "name": "Vernox Vision"
+        },
+        "offers": {
+          "@type": "Offer",
+          "url": "https://vernoxvision.gumroad.com/l/vernoxvision",
+          "priceCurrency": "USD",
+          "price": "9.99",
+          "priceValidUntil": "2030-12-31",
+          "availability": "https://schema.org/InStock"
+        }
+      }
+    </script>
   </head>
-  <body>
+  <body class="bg-[var(--bg)] text-[var(--ink)] antialiased selection:bg-[var(--accent)] selection:text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

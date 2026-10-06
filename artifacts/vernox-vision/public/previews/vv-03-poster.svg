@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 960" width="540" height="960">
+  <rect width="540" height="960" fill="#1C1D1F" />
+  <rect x="24" y="24" width="492" height="912" fill="none" stroke="#2E3035" stroke-width="1.5" />
+  
+  <text x="44" y="80" fill="#787B82" font-family="monospace" font-size="12" letter-spacing="2">VV—03 // LUXURY & LIFESTYLE</text>
+  <circle cx="488" cy="76" r="5" fill="#FF5A1F" />
+
+  <!-- Speedometer / Horology metallic geometric dial -->
+  <g transform="translate(170, 350)">
+    <circle cx="100" cy="100" r="90" fill="none" stroke="#33363D" stroke-width="2" />
+    <circle cx="100" cy="100" r="70" fill="none" stroke="#444852" stroke-width="1" stroke-dasharray="4 4" />
+    <line x1="100" y1="100" x2="160" y2="70" stroke="#FF5A1F" stroke-width="3" />
+    <circle cx="100" cy="100" r="8" fill="#FF5A1F" />
+  </g>
+
+  <text x="270" y="280" text-anchor="middle" fill="#E4E4E6" font-family="'Archivo', sans-serif" font-weight="900" font-size="54" letter-spacing="-3">3,000+</text>
+  <text x="270" y="315" text-anchor="middle" fill="#888B92" font-family="monospace" font-size="14" letter-spacing="3">HIGH-NET-WORTH VISUALS</text>
+
+  <rect x="44" y="800" width="452" height="88" fill="#131416" rx="2" />
+  <line x1="194" y1="800" x2="194" y2="888" stroke="#2E3035" stroke-width="1" />
+  <line x1="344" y1="800" x2="344" y2="888" stroke="#2E3035" stroke-width="1" />
+  
+  <text x="64" y="830" fill="#686B72" font-family="monospace" font-size="10">ASPECT</text>
+  <text x="64" y="856" fill="#E4E4E6" font-family="monospace" font-weight="bold" font-size="16">9:16 VERT</text>
+  <text x="214" y="830" fill="#686B72" font-family="monospace" font-size="10">NICHE</text>
+  <text x="214" y="856" fill="#E4E4E6" font-family="monospace" font-weight="bold" font-size="16">FINANCE/WEALTH</text>
+  <text x="364" y="830" fill="#686B72" font-family="monospace" font-size="10">DELIVERY</text>
+  <text x="364" y="856" fill="#FF5A1F" font-family="monospace" font-weight="bold" font-size="16">DRIVE SYNC</text>
+</svg>

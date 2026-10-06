@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 800" width="640" height="800">
+  <rect width="640" height="800" fill="#EFECE6" />
+  <rect x="24" y="24" width="592" height="752" fill="none" stroke="#D7D3CB" stroke-width="1.5" />
+  
+  <text x="44" y="70" fill="#67645E" font-family="monospace" font-size="12" letter-spacing="2">VV—00 // ONBOARDING & SETUP SPEC</text>
+  <rect x="550" y="55" width="40" height="20" rx="2" fill="#FF5A1F" />
+  <text x="570" y="69" text-anchor="middle" fill="#FFFFFF" font-family="monospace" font-weight="bold" font-size="10">PDF</text>
+
+  <!-- Flowchart / routing diagram -->
+  <g transform="translate(80, 160)">
+    <rect x="0" y="20" width="130" height="80" rx="2" fill="#DFDAD1" stroke="#BBB4A8" />
+    <text x="65" y="55" text-anchor="middle" fill="#252422" font-family="monospace" font-size="12" font-weight="bold">GUMROAD</text>
+    <text x="65" y="75" text-anchor="middle" fill="#67645E" font-family="monospace" font-size="10">ORDER RECEIPT</text>
+
+    <line x1="130" y1="60" x2="170" y2="60" stroke="#FF5A1F" stroke-width="2" />
+
+    <rect x="170" y="20" width="140" height="80" rx="2" fill="#DFDAD1" stroke="#BBB4A8" />
+    <text x="240" y="55" text-anchor="middle" fill="#252422" font-family="monospace" font-size="12" font-weight="bold">G-DRIVE VAULT</text>
+    <text x="240" y="75" text-anchor="middle" fill="#67645E" font-family="monospace" font-size="10">15,000+ ASSETS</text>
+
+    <line x1="310" y1="60" x2="350" y2="60" stroke="#FF5A1F" stroke-width="2" />
+
+    <rect x="350" y="20" width="130" height="80" rx="2" fill="#DFDAD1" stroke="#BBB4A8" />
+    <text x="415" y="55" text-anchor="middle" fill="#252422" font-family="monospace" font-size="12" font-weight="bold">EDITOR NLE</text>
+    <text x="415" y="75" text-anchor="middle" fill="#67645E" font-family="monospace" font-size="10">PREMIERE / CAPCUT</text>
+
+    <!-- Step numbering -->
+    <circle cx="65" cy="180" r="16" fill="#1A1918" />
+    <text x="65" y="185" text-anchor="middle" fill="#EFECE6" font-family="monospace" font-size="12">01</text>
+    <text x="100" y="185" fill="#252422" font-family="'Outfit', sans-serif" font-weight="bold" font-size="15">Instant Vault Invitation</text>
+
+    <circle cx="65" cy="240" r="16" fill="#1A1918" />
+    <text x="65" y="245" text-anchor="middle" fill="#EFECE6" font-family="monospace" font-size="12">02</text>
+    <text x="100" y="245" fill="#252422" font-family="'Outfit', sans-serif" font-weight="bold" font-size="15">Drive Shortcut Sync</text>
+
+    <circle cx="65" cy="300" r="16" fill="#1A1918" />
+    <text x="65" y="305" text-anchor="middle" fill="#EFECE6" font-family="monospace" font-size="12">03</text>
+    <text x="100" y="305" fill="#252422" font-family="'Outfit', sans-serif" font-weight="bold" font-size="15">Assemble In 60 Seconds</text>
+  </g>
+
+  <text x="320" y="650" text-anchor="middle" fill="#1A1918" font-family="'Archivo', sans-serif" font-weight="900" font-size="44" letter-spacing="-2">START HERE GUIDE</text>
+  <text x="320" y="685" text-anchor="middle" fill="#67645E" font-family="monospace" font-size="13" letter-spacing="2">SYSTEM SETUP PROTOCOL & DIRECTORY MAP</text>
+</svg>

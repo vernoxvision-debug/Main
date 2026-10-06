@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 960" width="540" height="960">
+  <rect width="540" height="960" fill="#EAE6DF" />
+  <rect x="24" y="24" width="492" height="912" fill="none" stroke="#D3CDC4" stroke-width="1.5" />
+  
+  <text x="44" y="80" fill="#6B6760" font-family="monospace" font-size="12" letter-spacing="2">VV—02 // SPEAKER & MOTIVATION</text>
+  <circle cx="488" cy="76" r="5" fill="#FF5A1F" />
+
+  <!-- Speaker mic & frequency geometry -->
+  <g transform="translate(190, 360)">
+    <circle cx="80" cy="80" r="70" fill="none" stroke="#2B2824" stroke-width="3" />
+    <circle cx="80" cy="80" r="50" fill="none" stroke="#2B2824" stroke-width="2" />
+    <circle cx="80" cy="80" r="30" fill="#FF5A1F" />
+    <line x1="80" y1="160" x2="80" y2="240" stroke="#2B2824" stroke-width="4" />
+    <line x1="30" y1="240" x2="130" y2="240" stroke="#2B2824" stroke-width="4" />
+  </g>
+
+  <text x="270" y="280" text-anchor="middle" fill="#1C1A17" font-family="'Archivo', sans-serif" font-weight="900" font-size="54" letter-spacing="-3">3,100+</text>
+  <text x="270" y="315" text-anchor="middle" fill="#6B6760" font-family="monospace" font-size="14" letter-spacing="3">KEYNOTE & MINDSET CLIPS</text>
+
+  <rect x="44" y="800" width="452" height="88" fill="#DFD9D0" rx="2" />
+  <line x1="194" y1="800" x2="194" y2="888" stroke="#CBC5BA" stroke-width="1" />
+  <line x1="344" y1="800" x2="344" y2="888" stroke="#CBC5BA" stroke-width="1" />
+  
+  <text x="64" y="830" fill="#757067" font-family="monospace" font-size="10">ASPECT</text>
+  <text x="64" y="856" fill="#1C1A17" font-family="monospace" font-weight="bold" font-size="16">9:16 VERT</text>
+  <text x="214" y="830" fill="#757067" font-family="monospace" font-size="10">AUDIO</text>
+  <text x="214" y="856" fill="#1C1A17" font-family="monospace" font-weight="bold" font-size="16">STUDIO VOX</text>
+  <text x="364" y="830" fill="#757067" font-family="monospace" font-size="10">DELIVERY</text>
+  <text x="364" y="856" fill="#FF5A1F" font-family="monospace" font-weight="bold" font-size="16">DRIVE SYNC</text>
+</svg>

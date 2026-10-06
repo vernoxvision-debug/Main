@@ -1,54 +1,83 @@
-import * as React from 'react';
-import * as AccordionPrimitive from '@radix-ui/react-accordion';
-import { cn } from '@/lib/utils';
-import { ChevronDown } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-const Accordion = AccordionPrimitive.Root;
+export interface AccordionItem {
+  id: string;
+  index: string;
+  question: string;
+  answer: string;
+}
 
-const AccordionItem = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Item>
->(({ className, ...props }, ref) => (
-  <AccordionPrimitive.Item
-    ref={ref}
-    className={cn('border-b', className)}
-    {...props}
-  />
-));
-AccordionItem.displayName = 'AccordionItem';
+export interface AccordionProps {
+  items: AccordionItem[];
+  defaultOpenId?: string;
+  className?: string;
+}
 
-const AccordionTrigger = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Header className="flex">
-    <AccordionPrimitive.Trigger
-      ref={ref}
-      className={cn(
-        'flex flex-1 items-center justify-between py-4 text-sm font-medium transition-all hover:underline text-left [&[data-state=open]>svg]:rotate-180',
-        className,
-      )}
-      {...props}
-    >
-      {children}
-      <ChevronDown className="h-4 w-4 shrink-0 text-muted-foreground transition-transform duration-200" />
-    </AccordionPrimitive.Trigger>
-  </AccordionPrimitive.Header>
-));
-AccordionTrigger.displayName = AccordionPrimitive.Trigger.displayName;
+export const Accordion: React.FC<AccordionProps> = ({ items, defaultOpenId, className = '' }) => {
+  const [openId, setOpenId] = useState<string | null>(defaultOpenId || null);
 
-const AccordionContent = React.forwardRef<
-  React.ElementRef<typeof AccordionPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof AccordionPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-  <AccordionPrimitive.Content
-    ref={ref}
-    className="overflow-hidden text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down"
-    {...props}
-  >
-    <div className={cn('pb-4 pt-0', className)}>{children}</div>
-  </AccordionPrimitive.Content>
-));
-AccordionContent.displayName = AccordionPrimitive.Content.displayName;
+  const toggle = (id: string) => {
+    setOpenId((prev) => (prev === id ? null : id));
+  };
 
-export { Accordion, AccordionItem, AccordionTrigger, AccordionContent };
+  return (
+    <div className={`border-t border-[var(--line)] divide-y divide-[var(--line)] ${className}`} data-testid="faq-accordion">
+      {items.map((item) => {
+        const isOpen = openId === item.id;
+        const panelId = `panel-${item.id}`;
+        const headerId = `header-${item.id}`;
+
+        return (
+          <div key={item.id} className="transition-colors hover:bg-[var(--line)]/10">
+            <h3>
+              <button
+                type="button"
+                id={headerId}
+                aria-expanded={isOpen}
+                aria-controls={panelId}
+                onClick={() => toggle(item.id)}
+                className="w-full py-4 sm:py-5 px-3 sm:px-4 text-left flex items-start sm:items-center justify-between gap-4 cursor-pointer focus-visible:outline-2 focus-visible:outline-[#FF5A1F]"
+                data-testid={`accordion-trigger-${item.id}`}
+              >
+                <div className="flex items-start sm:items-center gap-3 sm:gap-5">
+                  <span className="font-mono text-xs uppercase tracking-wider text-[var(--accent)] font-semibold shrink-0 mt-0.5 sm:mt-0">
+                    [{item.index}]
+                  </span>
+                  <span className="font-mono text-sm sm:text-base font-semibold text-[var(--ink)] tracking-tight">
+                    {item.question}
+                  </span>
+                </div>
+                <span
+                  className="font-mono text-sm sm:text-base text-[var(--ink-muted)] shrink-0 w-6 h-6 flex items-center justify-center border border-[var(--line)] rounded-[2px]"
+                  aria-hidden="true"
+                >
+                  {isOpen ? '—' : '+'}
+                </span>
+              </button>
+            </h3>
+
+            <AnimatePresence initial={false}>
+              {isOpen && (
+                <motion.div
+                  id={panelId}
+                  role="region"
+                  aria-labelledby={headerId}
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
+                  className="overflow-hidden"
+                >
+                  <div className="px-3 sm:px-4 pb-5 pt-1 pl-9 sm:pl-12 font-body text-xs sm:text-sm text-[var(--ink-muted)] leading-relaxed max-w-3xl">
+                    {item.answer}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
