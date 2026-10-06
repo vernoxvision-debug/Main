@@ -54,7 +54,7 @@ export const Home: React.FC = () => {
                 <Display
                   as="h1"
                   size="xl"
-                  className="tracking-[-0.055em] leading-[0.82] text-[var(--ink)]"
+                  className="tracking-[-0.055em] leading-[0.88] sm:leading-[0.86] text-[var(--ink)]"
                   id="hero-headline"
                   data-testid="hero-headline"
                 >
@@ -62,17 +62,14 @@ export const Home: React.FC = () => {
                   <div aria-hidden="true">
                     <MaskLine delay={0.05}>
                       <span className="line block">
-                        <span className="inline-block tracking-[-0.07em]">15,000</span>
-                        <span className="inline-block tracking-[-0.04em]">+</span>{' '}
-                        <span className="inline-block ml-1 sm:ml-2">CLIPS</span>
-                        <span className="inline-block -ml-[0.08em]">.</span>
+                        <span className="inline-block tracking-[-0.06em]">15,000+</span>{' '}
+                        <span className="inline-block">CLIPS.</span>
                       </span>
                     </MaskLine>
                     <MaskLine delay={0.15}>
-                      <span className="line flex items-baseline flex-wrap gap-x-2 sm:gap-x-4 mt-1 sm:mt-2">
-                        <span>ZERO</span>
-                        <span>TIMELINES</span>
-                        <span className="inline-block -ml-[0.08em]">.</span>
+                      <span className="line block mt-1 sm:mt-2">
+                        <span className="inline-block mr-2 sm:mr-3">ZERO</span>{' '}
+                        <span className="inline-block">TIMELINES.</span>
                       </span>
                     </MaskLine>
                   </div>

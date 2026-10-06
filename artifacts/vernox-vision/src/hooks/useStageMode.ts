@@ -6,17 +6,14 @@ const STORAGE_KEY = 'vv_stage_mode';
 
 export function useStageMode() {
   const [stageMode, setStageMode] = useState<StageMode>(() => {
-    if (typeof window === 'undefined') return 'light';
+    if (typeof window === 'undefined') return 'dark';
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored === 'dark' || stored === 'light') return stored;
-      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        return 'dark';
-      }
+      if (stored === 'light' || stored === 'dark') return stored;
     } catch {
       // ignore localStorage errors in privacy mode
     }
-    return 'light';
+    return 'dark';
   });
 
   useEffect(() => {

@@ -211,13 +211,13 @@ export const MaskLine: React.FC<MaskLineProps> = ({
   }
 
   return (
-    <span className={`block overflow-hidden ${className}`}>
+    <span className={`block ${className}`}>
       <motion.span
-        className="block"
-        initial={{ y: '105%' }}
-        animate={{ y: 0 }}
+        className="block min-w-full"
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
         transition={{
-          duration: 0.85,
+          duration: 0.45,
           delay,
           ease: [0.16, 1, 0.3, 1], // ease-out-expo
         }}

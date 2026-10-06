@@ -130,10 +130,10 @@
   --font-mono: "JetBrains Mono", "Mono Fallback", ui-monospace, monospace;
   --font-lcd: "DSEG7 Classic", ui-monospace, monospace;
 
-  /* Fluid Typographic Scale Tokens with clamp() */
-  --step-display-xl: clamp(3.25rem, 1.2rem + 11.5vw, 12rem);  /* Hero headline */
-  --step-display-l:  clamp(2.5rem, 1rem + 8vw, 8rem);          /* Room titles */
-  --step-display-m:  clamp(1.75rem, 1rem + 4vw, 4rem);         /* Unit names */
+  /* Fluid Typographic Scale Tokens with clamp() - calibrated for zero-clipping */
+  --step-display-xl: clamp(2.1rem, 1rem + 3.4vw, 4.35rem);   /* Hero headline */
+  --step-display-l:  clamp(1.85rem, 1rem + 3.8vw, 4.25rem);     /* Room titles */
+  --step-display-m:  clamp(1.35rem, 0.9rem + 2.2vw, 2.5rem);     /* Section / Unit names */
   --step-body-l:     clamp(1.125rem, 1rem + 0.5vw, 1.5rem);
   --step-body:       1rem;
   --step-label:      0.6875rem;  /* 11px */

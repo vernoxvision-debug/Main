@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-stage-mode="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,15 +10,19 @@
     />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="https://vernoxvision.com/" />
-    <meta name="theme-color" content="#F4F4F2" />
+    <meta name="theme-color" content="#0A0A0A" />
     <script>
       (function() {
         try {
           var mode = localStorage.getItem('vv_stage_mode');
-          if (mode === 'dark' || (!mode && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+          if (mode === 'light') {
+            document.documentElement.setAttribute('data-stage-mode', 'light');
+          } else {
             document.documentElement.setAttribute('data-stage-mode', 'dark');
           }
-        } catch (e) {}
+        } catch (e) {
+          document.documentElement.setAttribute('data-stage-mode', 'dark');
+        }
       })();
     </script>
 
@@ -42,10 +46,10 @@
     />
     <meta name="twitter:image" content="https://vernoxvision.com/previews/og-image.svg" />
 
-    <!-- Favicon: Official Vernox Vision Logo -->
-    <link rel="icon" type="image/jpeg" href="/vernox-logo.jpeg" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/vernox-logo.jpeg" />
+    <!-- Favicon: Primary Vernox Vision Logo -->
+    <link rel="icon" type="image/jpeg" href="/vernox-vision-logo.jpeg" />
+    <link rel="shortcut icon" type="image/jpeg" href="/vernox-vision-logo.jpeg" />
+    <link rel="apple-touch-icon" href="/vernox-vision-logo.jpeg" />
 
     <!-- Preload ONLY Archivo (the LCP font) -->
     <link

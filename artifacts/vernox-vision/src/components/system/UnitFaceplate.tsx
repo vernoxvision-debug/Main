@@ -88,11 +88,18 @@ export const UnitFaceplate: React.FC<UnitFaceplateProps> = ({
         </div>
 
         {/* Unit Name */}
-        <div className="mb-2">
-          <Display as="h3" size="m" className="text-sm sm:text-base leading-tight tracking-tight uppercase line-clamp-2">
+        <div className="mb-2 min-h-[46px] sm:min-h-[50px] flex flex-col justify-center">
+          <h3
+            className="uppercase tracking-[-0.035em] text-[13px] sm:text-[14px] leading-[1.08] text-inherit"
+            style={{
+              fontFamily: 'var(--font-display)',
+              fontStretch: '115%',
+              fontVariationSettings: '"wdth" 115, "wght" 850',
+            }}
+          >
             {unit.name}
-          </Display>
-          <div className="font-mono text-[8px] uppercase tracking-wider opacity-70 mt-0.5">
+          </h3>
+          <div className="font-mono text-[8px] uppercase tracking-wider opacity-70 mt-1">
             {isVideo ? 'FORMAT 9:16 VERTICAL' : 'STRATEGIC GUIDE MANUAL'}
           </div>
         </div>
