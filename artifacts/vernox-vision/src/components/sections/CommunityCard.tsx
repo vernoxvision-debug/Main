@@ -23,7 +23,7 @@ export const CommunityCard: React.FC = () => {
             href={SITE_CONFIG.gumroadUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="gold-pill-btn px-7 py-3.5 text-xs uppercase tracking-wider font-semibold whitespace-nowrap self-start sm:self-auto cursor-pointer"
+            className="gold-pill-btn w-full sm:w-auto px-7 py-3.5 text-xs uppercase tracking-wider font-semibold whitespace-nowrap text-center cursor-pointer"
           >
             JOIN NOW — $9.99 ↗
           </a>

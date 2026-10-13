@@ -37,11 +37,11 @@ export const LuxuryHero: React.FC = () => {
           </p>
 
           {/* CTA Row */}
-          <div className="mt-8 sm:mt-10 flex flex-wrap items-center gap-4 sm:gap-5">
+          <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 sm:gap-5 w-full sm:w-auto">
             <a
               href="#vault"
               data-testid="btn-explore-collection"
-              className="gold-pill-btn px-7 sm:px-8 py-3.5 sm:py-4 text-xs sm:text-sm tracking-wider uppercase font-semibold"
+              className="gold-pill-btn w-full sm:w-auto px-7 sm:px-8 py-3.5 sm:py-4 text-xs sm:text-sm tracking-wider uppercase font-semibold text-center"
             >
               EXPLORE THE COLLECTION →
             </a>
@@ -51,7 +51,7 @@ export const LuxuryHero: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               data-testid="btn-buy-cta"
-              className="luxury-ghost-btn px-6 sm:px-7 py-3.5 sm:py-4 text-xs sm:text-sm tracking-wider uppercase font-medium"
+              className="luxury-ghost-btn w-full sm:w-auto px-6 sm:px-7 py-3.5 sm:py-4 text-xs sm:text-sm tracking-wider uppercase font-medium text-center"
             >
               BUY VAULT — $9.99 ↗
             </a>
@@ -59,7 +59,7 @@ export const LuxuryHero: React.FC = () => {
 
           {/* Social Proof (Image 1 style: 3 avatars + 10K+ Creators Trust Vernox) */}
           <div className="mt-10 sm:mt-12 flex items-center gap-3.5 pt-6 border-t border-white/[0.07] w-full max-w-md">
-            <div className="flex -space-x-2">
+            <div className="flex -space-x-2 shrink-0">
               <div className="w-8 h-8 rounded-full border-2 border-[#070709] bg-gradient-to-br from-[#E2B770] to-[#8C6228] flex items-center justify-center text-[10px] font-bold text-black shadow-md">
                 JD
               </div>
@@ -72,7 +72,7 @@ export const LuxuryHero: React.FC = () => {
             </div>
 
             <div className="flex flex-col">
-              <span className="font-serif text-sm font-bold text-[#FAF8F5] tracking-wide">
+              <span className="font-mono text-sm font-bold text-[#FAF8F5] tracking-wide">
                 10,000+
               </span>
               <span className="font-mono text-[9px] uppercase tracking-widest text-[#9A9893]">

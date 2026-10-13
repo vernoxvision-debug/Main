@@ -19,9 +19,9 @@ export const SignaturePricing: React.FC = () => {
     <section id="pricing" className="py-24 px-4 sm:px-6 lg:px-8 bg-[#09090C] border-b border-white/[0.06] relative">
       <div className="max-w-4xl mx-auto">
         {/* The Cream Signature Card (Image 1 style) */}
-        <div data-testid="pricing-card" className="card-cream p-8 sm:p-12 lg:p-14 relative overflow-hidden">
+        <div data-testid="pricing-card" className="card-cream p-5 sm:p-12 lg:p-14 relative overflow-hidden">
           {/* Subtle watermark badge */}
-          <div className="absolute top-6 right-6 font-mono text-[9px] uppercase tracking-widest text-[#121214]/40 border border-[#121214]/15 px-3 py-1 rounded-full">
+          <div className="hidden sm:block absolute top-6 right-6 font-mono text-[9px] uppercase tracking-widest text-[#121214]/40 border border-[#121214]/15 px-3 py-1 rounded-full">
             OFFICIAL RELEASE · V2.0
           </div>
 
@@ -44,7 +44,7 @@ export const SignaturePricing: React.FC = () => {
 
             {/* Price Readout */}
             <div className="flex items-baseline gap-3 pb-8 mb-8 border-b border-[#121214]/15">
-              <span className="font-serif text-5xl sm:text-7xl font-bold text-[#121214] tracking-tight">
+              <span className="font-serif text-4xl sm:text-7xl font-bold text-[#121214] tracking-tight">
                 $9.99
               </span>
               <div className="flex flex-col">

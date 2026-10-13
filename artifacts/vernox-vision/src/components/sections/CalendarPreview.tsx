@@ -89,7 +89,7 @@ export const CalendarPreview: React.FC = () => {
             onClick={() => setWeekFilter('all')}
             className={`px-2 py-0.5 rounded-[1px] border cursor-pointer transition-colors ${
               weekFilter === 'all'
-                ? 'bg-[#FF5A1F] text-black font-bold border-[#FF5A1F]'
+                ? 'bg-[#D8A856] text-black font-bold border-[#D8A856]'
                 : 'border-[var(--line)] text-[var(--ink-muted)] hover:text-[var(--ink)]'
             }`}
           >

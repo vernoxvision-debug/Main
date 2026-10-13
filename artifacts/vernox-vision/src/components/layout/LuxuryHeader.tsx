@@ -41,23 +41,23 @@ export const LuxuryHeader: React.FC = () => {
           : 'bg-transparent py-5'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 flex items-center justify-between gap-2">
         {/* Logo */}
         <Link
           href="/"
           data-testid="brand-wordmark"
-          className="flex items-center gap-3 text-inherit no-underline group cursor-pointer"
+          className="flex items-center gap-2 sm:gap-3 text-inherit no-underline group cursor-pointer shrink-0"
         >
           <img
             src="/logo-dark.png"
             alt="Vernox Vision Eagle Monogram"
-            className="h-9 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105"
+            className="h-7 sm:h-10 w-auto object-contain transition-transform group-hover:scale-105"
           />
           <div className="flex flex-col">
-            <span className="font-serif tracking-[0.2em] text-lg sm:text-xl font-medium text-[#FAF8F5]">
+            <span className="font-serif tracking-[0.16em] sm:tracking-[0.2em] text-sm sm:text-xl font-medium text-[#FAF8F5] leading-tight">
               VERNOX
             </span>
-            <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-[#D8A856]">
+            <span className="font-mono text-[8px] sm:text-[9px] tracking-[0.25em] uppercase text-[#D8A856] leading-tight">
               VISION
             </span>
           </div>
@@ -77,17 +77,17 @@ export const LuxuryHeader: React.FC = () => {
         </nav>
 
         {/* Right CTA Button & Mobile Menu Trigger */}
-        <div className="flex items-center gap-3 sm:gap-4">
+        <div className="flex items-center gap-1.5 sm:gap-4 shrink-0">
           <a
             href={SITE_CONFIG.gumroadUrl}
             target="_blank"
             rel="noopener noreferrer"
             data-testid="btn-buy-cta"
-            className="gold-pill-btn px-5 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-xs tracking-wider uppercase font-semibold"
+            className="gold-pill-btn px-2.5 sm:px-6 py-1.5 sm:py-2.5 text-[9px] min-[390px]:text-[10px] sm:text-xs tracking-wider uppercase font-semibold whitespace-nowrap shrink-0 flex items-center gap-1 shadow-md"
           >
             <span>GET LIFETIME ACCESS</span>
-            <span className="ml-1 text-[#09090C] font-mono">$9.99</span>
-            <span className="ml-1">↗</span>
+            <span className="text-[#09090C] font-mono font-bold">$9.99</span>
+            <span className="text-[9px] sm:text-xs">↗</span>
           </a>
 
           {/* Mobile Drawer Button */}
@@ -95,7 +95,7 @@ export const LuxuryHeader: React.FC = () => {
             type="button"
             data-testid="btn-mobile-menu"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden w-10 h-10 rounded-full bg-white/[0.04] border border-white/[0.1] text-[#FAF8F5] flex items-center justify-center cursor-pointer hover:border-[#D8A856] transition-colors"
+            className="md:hidden w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white/[0.04] border border-white/[0.1] text-[#FAF8F5] flex items-center justify-center cursor-pointer hover:border-[#D8A856] transition-colors text-xs sm:text-base shrink-0"
             aria-label="Toggle mobile menu"
             aria-expanded={mobileMenuOpen}
           >
