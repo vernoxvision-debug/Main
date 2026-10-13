@@ -100,7 +100,7 @@ export const CalendarPreview: React.FC = () => {
             onClick={() => setWeekFilter('w1')}
             className={`px-2 py-0.5 rounded-[1px] border cursor-pointer transition-colors ${
               weekFilter === 'w1'
-                ? 'bg-[#FF5A1F] text-black font-bold border-[#FF5A1F]'
+                ? 'bg-[#D8A856] text-black font-bold border-[#D8A856]'
                 : 'border-[var(--line)] text-[var(--ink-muted)] hover:text-[var(--ink)]'
             }`}
           >
@@ -111,7 +111,7 @@ export const CalendarPreview: React.FC = () => {
             onClick={() => setWeekFilter('w2')}
             className={`px-2 py-0.5 rounded-[1px] border cursor-pointer transition-colors ${
               weekFilter === 'w2'
-                ? 'bg-[#FF5A1F] text-black font-bold border-[#FF5A1F]'
+                ? 'bg-[#D8A856] text-black font-bold border-[#D8A856]'
                 : 'border-[var(--line)] text-[var(--ink-muted)] hover:text-[var(--ink)]'
             }`}
           >
@@ -122,7 +122,7 @@ export const CalendarPreview: React.FC = () => {
             onClick={() => setWeekFilter('w3')}
             className={`px-2 py-0.5 rounded-[1px] border cursor-pointer transition-colors ${
               weekFilter === 'w3'
-                ? 'bg-[#FF5A1F] text-black font-bold border-[#FF5A1F]'
+                ? 'bg-[#D8A856] text-black font-bold border-[#D8A856]'
                 : 'border-[var(--line)] text-[var(--ink-muted)] hover:text-[var(--ink)]'
             }`}
           >
@@ -133,7 +133,7 @@ export const CalendarPreview: React.FC = () => {
             onClick={() => setWeekFilter('w4')}
             className={`px-2 py-0.5 rounded-[1px] border cursor-pointer transition-colors ${
               weekFilter === 'w4'
-                ? 'bg-[#FF5A1F] text-black font-bold border-[#FF5A1F]'
+                ? 'bg-[#D8A856] text-black font-bold border-[#D8A856]'
                 : 'border-[var(--line)] text-[var(--ink-muted)] hover:text-[var(--ink)]'
             }`}
           >
@@ -144,7 +144,7 @@ export const CalendarPreview: React.FC = () => {
             onClick={() => setWeekFilter('w5')}
             className={`px-2 py-0.5 rounded-[1px] border cursor-pointer transition-colors ${
               weekFilter === 'w5'
-                ? 'bg-[#FF5A1F] text-black font-bold border-[#FF5A1F]'
+                ? 'bg-[#D8A856] text-black font-bold border-[#D8A856]'
                 : 'border-[var(--line)] text-[var(--ink-muted)] hover:text-[var(--ink)]'
             }`}
           >
@@ -163,9 +163,9 @@ export const CalendarPreview: React.FC = () => {
               type="button"
               onClick={() => setSelectedDay(item)}
               onMouseEnter={() => setSelectedDay(item)}
-              className={`h-9 sm:h-10 rounded-[2px] font-mono text-xs flex flex-col items-center justify-center gap-0.5 border transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-[#FF5A1F] ${
+              className={`h-9 sm:h-10 rounded-[2px] font-mono text-xs flex flex-col items-center justify-center gap-0.5 border transition-all cursor-pointer focus-visible:outline-2 focus-visible:outline-[#D8A856] ${
                 isSelected
-                  ? 'bg-[#FF5A1F] text-black font-bold border-[#FF5A1F] shadow-sm'
+                  ? 'bg-[#D8A856] text-black font-bold border-[#D8A856] shadow-sm'
                   : 'bg-[var(--bg)] text-[var(--ink)] border-[var(--line)] hover:border-[var(--ink)]'
               }`}
               data-testid={`calendar-day-${item.day}`}
@@ -190,7 +190,7 @@ export const CalendarPreview: React.FC = () => {
         {/* Title & Tag Row: Mobile-Responsive Stack */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1.5 border-b border-[var(--line)]/50 pb-2 mb-2">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#FF5A1F] shadow-[0_0_6px_#FF5A1F]" />
+            <span className="w-2 h-2 rounded-full bg-[#D8A856] shadow-[0_0_6px_#D8A856]" />
             <span className="font-mono text-xs font-bold text-[var(--ink)]">
               DAY {selectedDay.day.toString().padStart(2, '0')} // {selectedDay.pillar}
             </span>
@@ -225,7 +225,7 @@ export const CalendarPreview: React.FC = () => {
             className={`px-2 py-1 rounded-[1px] border flex items-center gap-1 cursor-pointer transition-colors ${
               selectedDay.day === 1
                 ? 'opacity-40 cursor-not-allowed border-transparent text-[var(--ink-muted)]'
-                : 'border-[var(--line)] hover:border-[#FF5A1F] text-[var(--ink)] hover:text-[#FF5A1F]'
+                : 'border-[var(--line)] hover:border-[#D8A856] text-[var(--ink)] hover:text-[#D8A856]'
             }`}
           >
             ◄ PREV DAY
@@ -242,7 +242,7 @@ export const CalendarPreview: React.FC = () => {
             className={`px-2 py-1 rounded-[1px] border flex items-center gap-1 cursor-pointer transition-colors ${
               selectedDay.day === 30
                 ? 'opacity-40 cursor-not-allowed border-transparent text-[var(--ink-muted)]'
-                : 'border-[var(--line)] hover:border-[#FF5A1F] text-[var(--ink)] hover:text-[#FF5A1F]'
+                : 'border-[var(--line)] hover:border-[#D8A856] text-[var(--ink)] hover:text-[#D8A856]'
             }`}
           >
             NEXT DAY ►
