@@ -77,11 +77,11 @@ test.describe('Vernox Vision Luxury Editorial Theme & 3D Coverflow Suite', () =>
   });
 
   // 06 - Attribution Link in Footer matches user request
-  test('06 - Footer contains exact attribution link to Madhan Kumar T', async ({ page }) => {
+  test('06 - Footer contains exact attribution link to madhankumart.in', async ({ page }) => {
     await page.goto('/');
-    const attributionLink = page.locator('footer a[href="https://www.madhankumart.in"]');
+    const attributionLink = page.locator('footer a[href="https://madhankumart.in"]');
     await expect(attributionLink).toBeVisible();
-    await expect(attributionLink).toContainText('Websites by Madhan Kumar T');
+    await expect(attributionLink).toContainText('For More Websites Like This?');
   });
 
   // 07 - Mobile Viewport test: zero horizontal overflow on 360px

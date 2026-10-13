@@ -122,12 +122,12 @@ export const LuxuryFooter: React.FC = () => {
 
           <div>
             <a
-              href="https://www.madhankumart.in"
+              href="https://madhankumart.in"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#D8A856] hover:underline font-medium transition-colors"
             >
-              Websites by Madhan Kumar T
+              For More Websites Like This?
             </a>
           </div>
         </div>

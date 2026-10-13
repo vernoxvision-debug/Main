@@ -85,7 +85,7 @@ export const LuxuryHeader: React.FC = () => {
             data-testid="btn-buy-cta"
             className="gold-pill-btn px-5 sm:px-6 py-2 sm:py-2.5 text-xs sm:text-xs tracking-wider uppercase font-semibold"
           >
-            <span>GET ACCESS</span>
+            <span>GET LIFETIME ACCESS</span>
             <span className="ml-1 text-[#09090C] font-mono">$9.99</span>
             <span className="ml-1">↗</span>
           </a>
