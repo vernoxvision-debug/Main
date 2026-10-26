@@ -58,9 +58,15 @@ export const App: React.FC = () => {
     };
   }, [prefersReducedMotion]);
 
-  // Handle route change: scroll to top and fire Meta Pixel PageView
+    // Track route changes without duplicating initial PageView
+  const isFirstRender = useRef(true);
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     trackPixel('PageView', { path: location });
   }, [location]);
 
