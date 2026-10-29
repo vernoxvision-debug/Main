@@ -21,10 +21,8 @@ test.describe('Vernox Vision Luxury Editorial Theme & 3D Coverflow Suite', () =>
     await page.goto('/');
     const headline = page.locator('[data-testid="hero-headline"]');
     await expect(headline).toBeVisible();
-    await expect(headline).toContainText('Create');
-    await expect(headline).toContainText('without limits');
-    await expect(headline).toContainText('Build your');
-    await expect(headline).toContainText('vision');
+    await expect(headline).toContainText('Create Without');
+    await expect(headline).toContainText('Limits.');
   });
 
   // 03 - 3D Coverflow Carousel renders and navigates
@@ -76,12 +74,13 @@ test.describe('Vernox Vision Luxury Editorial Theme & 3D Coverflow Suite', () =>
     await expect(pricingCard).toContainText('LIFETIME ACCESS');
   });
 
-  // 06 - Attribution Link in Footer matches user request
-  test('06 - Footer contains exact attribution link to madhankumart.in', async ({ page }) => {
+  // 06 - Attribution Link in Footer has been completely removed
+  test('06 - Unwanted third-party credit section and links are completely removed', async ({ page }) => {
     await page.goto('/');
-    const attributionLink = page.locator('footer a[href="https://madhankumart.in"]');
-    await expect(attributionLink).toBeVisible();
-    await expect(attributionLink).toContainText('For More Websites Like This?');
+    const attributionLink = page.locator('footer a[href*="madhankumart.in"]');
+    await expect(attributionLink).toHaveCount(0);
+    const unwantedText = page.getByText('For More Websites Like This?', { exact: false });
+    await expect(unwantedText).toHaveCount(0);
   });
 
   // 07 - Mobile Viewport test: zero horizontal overflow on 360px
@@ -115,5 +114,12 @@ test.describe('Vernox Vision Luxury Editorial Theme & 3D Coverflow Suite', () =>
     await page.goto('/');
     await page.waitForLoadState('networkidle');
     expect(externalFontRequests).toEqual([]);
+  });
+
+  // 09 - Purposeful transition strip: YOUR NEXT ERA STARTS HERE.
+  test('09 - Transition strip "YOUR NEXT ERA STARTS HERE." is rendered', async ({ page }) => {
+    await page.goto('/');
+    const strip = page.getByText('YOUR NEXT ERA STARTS HERE.', { exact: false });
+    await expect(strip).toBeVisible();
   });
 });

@@ -358,14 +358,10 @@ test.describe('Vernox Vision Test Suite', () => {
     });
   });
 
-  // Scenario 26: Developer credit link points to https://www.madhankumart.in
-  test('26 - Developer credit link points to https://www.madhankumart.in', async ({ page }) => {
+  // Scenario 26: Developer credit link is removed
+  test('26 - Developer credit link is removed', async ({ page }) => {
     await page.goto('/');
     const creditLink = page.locator('[data-testid="link-developer-credit"]');
-    await creditLink.scrollIntoViewIfNeeded();
-    await expect(creditLink).toBeVisible();
-    await expect(creditLink).toHaveText('Madhan Kumar T');
-    await expect(creditLink).toHaveAttribute('href', 'https://www.madhankumart.in');
-    await expect(creditLink).toHaveAttribute('target', '_blank');
+    await expect(creditLink).toHaveCount(0);
   });
 });
