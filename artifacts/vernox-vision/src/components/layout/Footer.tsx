@@ -130,19 +130,6 @@ export const Footer: React.FC = () => {
         <span>© {new Date().getFullYear()} VERNOX VISION. ALL RIGHTS RESERVED.</span>
         <span>NO SUBSCRIPTION · ONE PAYMENT $9.99 · LIFETIME ACCESS</span>
       </div>
-
-      {/* Credit Line: For More Websites Like This? */}
-      <div className="border-t border-[var(--line)]/50 py-3.5 px-4 text-center font-mono text-[11px] tracking-widest uppercase bg-[var(--bg)] text-[var(--ink-muted)]">
-        <a
-          href="https://madhankumart.in"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-[var(--ink)] hover:text-[#FF5A1F] underline underline-offset-4 font-bold transition-colors"
-          data-testid="link-developer-credit"
-        >
-          For More Websites Like This?
-        </a>
-      </div>
     </footer>
   );
 };

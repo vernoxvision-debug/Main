@@ -56,17 +56,17 @@ export const CreatorToolbox: React.FC = () => {
   ];
 
   return (
-    <section id="toolbox" className="py-24 px-4 sm:px-6 lg:px-8 bg-[#070709] border-b border-white/[0.06]">
-      <div className="max-w-6xl mx-auto">
-        {/* Section Header from Image 1 */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-14 gap-6">
+    <section id="toolbox" className="py-24 sm:py-32 px-4 sm:px-8 lg:px-12 bg-[#070709] border-b border-white/[0.06]">
+      <div className="max-w-[1360px] mx-auto">
+        {/* Section Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-14 sm:mb-16 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] mb-4">
-              <span className="font-mono text-[10px] tracking-widest uppercase text-[#D8A856]">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-[#D8A856]/20 mb-4 backdrop-blur-sm">
+              <span className="font-mono text-[10px] sm:text-[11px] tracking-widest uppercase text-[#D8A856] font-semibold">
                 WHAT&apos;S INSIDE
               </span>
             </div>
-            <h2 className="font-serif text-3xl sm:text-5xl text-[#FAF8F5] tracking-tight leading-tight">
+            <h2 className="font-serif text-4xl sm:text-6xl lg:text-7xl text-[#FAF8F5] tracking-tight leading-tight">
               A complete <span className="text-gold-gradient italic">creator toolbox.</span>
             </h2>
           </div>
@@ -75,7 +75,7 @@ export const CreatorToolbox: React.FC = () => {
             href={SITE_CONFIG.gumroadUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-mono text-xs text-[#D8A856] hover:underline uppercase tracking-wider flex items-center gap-1.5"
+            className="font-mono text-xs sm:text-sm text-[#D8A856] hover:underline uppercase tracking-wider flex items-center gap-2 font-medium"
           >
             <span>VIEW FULL VAULT SPEC</span>
             <span>→</span>
@@ -83,48 +83,48 @@ export const CreatorToolbox: React.FC = () => {
         </div>
 
         {/* 4 Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-7">
           {tools.map((tool, index) => (
             <div
               key={tool.name}
               onClick={() => setActiveItem(index)}
-              className={`p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between cursor-pointer ${
+              className={`p-7 sm:p-8 rounded-[20px] border transition-all duration-300 flex flex-col justify-between cursor-pointer ${
                 activeItem === index
-                  ? 'bg-gradient-to-b from-[#18181E] to-[#0E0E12] border-[#D8A856] shadow-[0_12px_30px_rgba(216,168,86,0.18)]'
-                  : 'bg-[#111115] border-white/[0.07] hover:border-white/[0.2]'
+                  ? 'bg-gradient-to-b from-[#1A1A22] to-[#0E0E14] border-[#D8A856] shadow-[0_16px_36px_rgba(216,168,86,0.22)]'
+                  : 'bg-[#111115] border-white/[0.08] hover:border-white/[0.22]'
               }`}
             >
               <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="font-mono text-[10px] text-[#D8A856] font-bold">
+                <div className="flex items-center justify-between mb-5">
+                  <span className="font-mono text-xs text-[#D8A856] font-bold">
                     {tool.code}
                   </span>
-                  <span className="font-mono text-[9px] uppercase px-2 py-0.5 rounded-full bg-white/[0.04] text-[#9A9893]">
+                  <span className="font-mono text-[10px] uppercase px-2.5 py-1 rounded-full bg-white/[0.05] text-[#9A9893]">
                     {tool.tag}
                   </span>
                 </div>
 
-                <h3 className="font-serif text-2xl text-[#FAF8F5] mb-2">
+                <h3 className="font-serif text-2xl sm:text-3xl text-[#FAF8F5] mb-2.5">
                   {tool.name}
                 </h3>
 
-                <p className="font-body text-xs text-[#9A9893] leading-relaxed mb-4">
+                <p className="font-body text-xs sm:text-sm text-[#9A9893] leading-relaxed mb-5 font-light">
                   {tool.description}
                 </p>
 
-                <ul className="space-y-1.5 pt-3 border-t border-white/[0.06]">
+                <ul className="space-y-2 pt-4 border-t border-white/[0.06]">
                   {tool.items.map((item) => (
-                    <li key={item} className="flex items-center gap-2 text-xs font-body text-[#FAF8F5]/80">
-                      <span className="w-1 h-1 rounded-full bg-[#D8A856]" />
+                    <li key={item} className="flex items-center gap-2.5 text-xs sm:text-sm font-body text-[#FAF8F5]/85">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#D8A856] shrink-0" />
                       <span>{item}</span>
                     </li>
                   ))}
                 </ul>
               </div>
 
-              <div className="pt-4 mt-6 border-t border-white/[0.06] flex items-center justify-between text-[10px] font-mono text-[#9A9893]">
+              <div className="pt-5 mt-6 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-[#9A9893]">
                 <span>STATUS: READY</span>
-                <span className="text-[#D8A856]">INCLUDED</span>
+                <span className="text-[#D8A856] font-medium">INCLUDED</span>
               </div>
             </div>
           ))}

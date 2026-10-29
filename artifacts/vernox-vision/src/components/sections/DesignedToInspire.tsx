@@ -38,31 +38,31 @@ export const DesignedToInspire: React.FC = () => {
   const current = slides[activeSlide];
 
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-[#09090C] border-b border-white/[0.06]">
-      <div className="max-w-5xl mx-auto">
-        {/* Header from Image 1 */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-6">
+    <section className="py-24 sm:py-32 px-4 sm:px-8 lg:px-12 bg-[#09090C] border-b border-white/[0.06]">
+      <div className="max-w-[1360px] mx-auto">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-14 gap-6">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] mb-4">
-              <span className="font-mono text-[10px] tracking-widest uppercase text-[#D8A856]">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-[#D8A856]/20 mb-4 backdrop-blur-sm">
+              <span className="font-mono text-[10px] sm:text-[11px] tracking-widest uppercase text-[#D8A856] font-semibold">
                 PREMIUM VISUALS
               </span>
             </div>
-            <h2 className="font-serif text-3xl sm:text-5xl text-[#FAF8F5] tracking-tight">
+            <h2 className="font-serif text-4xl sm:text-6xl lg:text-7xl text-[#FAF8F5] tracking-tight leading-tight">
               Designed to <span className="text-gold-gradient italic">inspire.</span>
             </h2>
           </div>
 
           {/* Stepper Controls */}
           <div className="flex items-center gap-4">
-            <span className="font-mono text-xs text-[#9A9893]">
+            <span className="font-mono text-xs sm:text-sm text-[#9A9893]">
               0{activeSlide + 1} / 0{total}
             </span>
             <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={() => setActiveSlide((prev) => (prev - 1 + total) % total)}
-                className="w-9 h-9 rounded-full bg-white/[0.04] border border-white/[0.1] text-[#FAF8F5] hover:border-[#D8A856] hover:text-[#D8A856] flex items-center justify-center transition-colors cursor-pointer"
+                className="w-10 h-10 rounded-full bg-white/[0.04] border border-white/[0.1] text-[#FAF8F5] hover:border-[#D8A856] hover:text-[#D8A856] flex items-center justify-center transition-colors cursor-pointer"
                 aria-label="Previous slide"
               >
                 ←
@@ -70,7 +70,7 @@ export const DesignedToInspire: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setActiveSlide((prev) => (prev + 1) % total)}
-                className="w-9 h-9 rounded-full bg-white/[0.04] border border-white/[0.1] text-[#FAF8F5] hover:border-[#D8A856] hover:text-[#D8A856] flex items-center justify-center transition-colors cursor-pointer"
+                className="w-10 h-10 rounded-full bg-white/[0.04] border border-white/[0.1] text-[#FAF8F5] hover:border-[#D8A856] hover:text-[#D8A856] flex items-center justify-center transition-colors cursor-pointer"
                 aria-label="Next slide"
               >
                 →
@@ -80,19 +80,24 @@ export const DesignedToInspire: React.FC = () => {
         </div>
 
         {/* Featured Visual Slide Card */}
-        <div className="card-luxury p-8 sm:p-12 relative overflow-hidden bg-gradient-to-br from-[#141419] to-[#0A0A0D]">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+        <div className="card-luxury p-8 sm:p-12 lg:p-14 relative overflow-hidden bg-gradient-to-br from-[#141419] to-[#0A0A0D]">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center">
             {/* Visual Frame */}
-            <div className="md:col-span-5 h-[320px] rounded-xl overflow-hidden bg-[#181820] border border-[#D8A856]/20 relative flex items-center justify-center p-6">
-              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(216,168,86,0.18)_0%,transparent_75%)]" />
-              <div className="text-center z-10">
-                <span className="font-mono text-[9px] uppercase tracking-widest text-[#D8A856] block mb-2">
+            <div className="md:col-span-5 h-[340px] sm:h-[400px] rounded-2xl overflow-hidden bg-[#181820] border border-[#D8A856]/25 relative flex items-center justify-center p-8 group">
+              <img
+                src="/golden-arcs.png"
+                alt=""
+                className="absolute inset-0 w-full h-full object-cover opacity-30 group-hover:opacity-45 transition-opacity duration-700"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#181820] via-transparent to-[#181820]/80" />
+              <div className="text-center relative z-10">
+                <span className="font-mono text-[10px] sm:text-xs uppercase tracking-widest text-[#D8A856] font-semibold block mb-2.5">
                   {current.bundle}
                 </span>
-                <h4 className="font-serif text-2xl text-[#FAF8F5]">
+                <h4 className="font-serif text-2xl sm:text-3xl text-[#FAF8F5] tracking-tight">
                   {current.category}
                 </h4>
-                <div className="mt-4 inline-block font-mono text-[10px] text-[#FAF8F5]/70 px-3 py-1 rounded-full bg-black/40 border border-white/10">
+                <div className="mt-5 inline-block font-mono text-[11px] text-[#FAF8F5]/85 px-3.5 py-1.5 rounded-full bg-black/60 border border-white/10 backdrop-blur-sm">
                   {current.stats}
                 </div>
               </div>
@@ -101,26 +106,26 @@ export const DesignedToInspire: React.FC = () => {
             {/* Description */}
             <div className="md:col-span-7 flex flex-col justify-between">
               <div>
-                <span className="font-mono text-[10px] uppercase tracking-widest text-[#D8A856] font-bold block mb-2">
+                <span className="font-mono text-[10px] sm:text-[11px] uppercase tracking-widest text-[#D8A856] font-bold block mb-3">
                   CURATED VISUAL SPECIFICATION
                 </span>
-                <h3 className="font-serif text-2xl sm:text-3xl text-[#FAF8F5] mb-4">
+                <h3 className="font-serif text-3xl sm:text-4xl text-[#FAF8F5] mb-4 leading-tight">
                   {current.title}
                 </h3>
-                <p className="font-body text-sm text-[#9A9893] leading-relaxed mb-6">
+                <p className="font-body text-sm sm:text-base text-[#9A9893] leading-relaxed mb-8 font-light">
                   {current.desc}
                 </p>
               </div>
 
               {/* Progress Bar */}
-              <div className="pt-6 border-t border-white/[0.06] flex items-center gap-3">
+              <div className="pt-6 border-t border-white/[0.08] flex items-center gap-3">
                 {slides.map((_, i) => (
                   <button
                     key={i}
                     type="button"
                     onClick={() => setActiveSlide(i)}
-                    className={`h-1 rounded-full transition-all duration-300 cursor-pointer ${
-                      activeSlide === i ? 'w-12 bg-[#D8A856]' : 'w-4 bg-white/20'
+                    className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                      activeSlide === i ? 'w-14 bg-[#D8A856]' : 'w-4 bg-white/20 hover:bg-white/40'
                     }`}
                     aria-label={`Jump to visual 0${i + 1}`}
                   />

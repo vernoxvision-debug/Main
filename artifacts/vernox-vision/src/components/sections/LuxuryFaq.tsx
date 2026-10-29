@@ -31,17 +31,17 @@ export const LuxuryFaq: React.FC = () => {
   ];
 
   return (
-    <section id="faq" className="py-24 px-4 sm:px-6 lg:px-8 bg-[#070709] border-b border-white/[0.06]">
-      <div className="max-w-4xl mx-auto">
-        {/* Header from Image 1 */}
-        <div className="mb-14">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] mb-4">
-            <span className="font-mono text-[10px] tracking-widest uppercase text-[#D8A856]">
+    <section id="faq" className="py-24 sm:py-32 px-4 sm:px-8 lg:px-12 bg-[#070709] border-b border-white/[0.06]">
+      <div className="max-w-5xl lg:max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="mb-14 sm:mb-16">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.03] border border-[#D8A856]/20 mb-4 backdrop-blur-sm">
+            <span className="font-mono text-[10px] sm:text-[11px] tracking-widest uppercase text-[#D8A856] font-semibold">
               FAQ
             </span>
           </div>
 
-          <h2 className="font-serif text-3xl sm:text-5xl text-[#FAF8F5] tracking-tight">
+          <h2 className="font-serif text-4xl sm:text-6xl lg:text-7xl text-[#FAF8F5] tracking-tight">
             Common <span className="text-gold-gradient italic">questions.</span>
           </h2>
         </div>
@@ -51,16 +51,16 @@ export const LuxuryFaq: React.FC = () => {
           {faqList.map((item, idx) => {
             const isOpen = openIndex === idx;
             return (
-              <div key={item.q} className="py-6 transition-colors">
+              <div key={item.q} className="py-7 sm:py-8 transition-colors">
                 <button
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
-                  className="w-full flex items-center justify-between text-left gap-4 font-serif text-lg sm:text-xl text-[#FAF8F5] hover:text-[#D8A856] transition-colors cursor-pointer select-none"
+                  className="w-full flex items-center justify-between text-left gap-6 font-serif text-xl sm:text-2xl text-[#FAF8F5] hover:text-[#D8A856] transition-colors cursor-pointer select-none"
                   aria-expanded={isOpen}
                 >
                   <span>{item.q}</span>
                   <span
-                    className={`w-7 h-7 rounded-full border border-white/[0.1] flex items-center justify-center font-mono text-xs shrink-0 transition-transform duration-300 ${
+                    className={`w-8 h-8 rounded-full border border-white/[0.12] flex items-center justify-center font-mono text-sm shrink-0 transition-transform duration-300 ${
                       isOpen
                         ? 'rotate-45 bg-[#D8A856] text-black border-[#D8A856]'
                         : 'text-[#9A9893]'
@@ -71,7 +71,7 @@ export const LuxuryFaq: React.FC = () => {
                 </button>
 
                 {isOpen && (
-                  <div className="mt-4 pr-10 font-body text-xs sm:text-sm text-[#9A9893] leading-relaxed animate-fadeIn">
+                  <div className="mt-4 sm:mt-5 pr-8 sm:pr-12 font-body text-sm sm:text-base text-[#9A9893] leading-relaxed animate-fadeIn font-light">
                     {item.a}
                   </div>
                 )}
