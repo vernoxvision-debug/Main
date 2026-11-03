@@ -10,7 +10,6 @@ import { CalendarPreview } from '@/components/sections/CalendarPreview';
 import { DesignedToInspire } from '@/components/sections/DesignedToInspire';
 import { SimpleProcess } from '@/components/sections/SimpleProcess';
 import { CommunityCard } from '@/components/sections/CommunityCard';
-import { CreatorTestimonials } from '@/components/sections/CreatorTestimonials';
 import { LuxuryFaq } from '@/components/sections/LuxuryFaq';
 
 export const Home: React.FC = () => {
@@ -73,10 +72,7 @@ export const Home: React.FC = () => {
         {/* SECTION 9: ECOSYSTEM / COMMUNITY CARD */}
         <CommunityCard />
 
-        {/* SECTION 10: REAL CREATORS / TESTIMONIALS */}
-        <CreatorTestimonials />
-
-        {/* SECTION 11: COMMON QUESTIONS / FAQ */}
+        {/* SECTION 10: COMMON QUESTIONS / FAQ */}
         <LuxuryFaq />
       </main>
 

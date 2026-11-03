@@ -116,10 +116,14 @@ test.describe('Vernox Vision Luxury Editorial Theme & 3D Coverflow Suite', () =>
     expect(externalFontRequests).toEqual([]);
   });
 
-  // 09 - Purposeful transition strip: YOUR NEXT ERA STARTS HERE.
-  test('09 - Transition strip "YOUR NEXT ERA STARTS HERE." is rendered', async ({ page }) => {
+  // 09 - Testimonials and Closing CTA strip are completely removed
+  test('09 - Testimonials and Closing CTA text are completely removed', async ({ page }) => {
     await page.goto('/');
-    const strip = page.getByText('YOUR NEXT ERA STARTS HERE.', { exact: false });
-    await expect(strip).toBeVisible();
+    // Check testimonials removed
+    await expect(page.getByText('Real creators. Real results.', { exact: false })).toHaveCount(0);
+    await expect(page.getByText('AUTHENTIC FEEDBACK', { exact: false })).toHaveCount(0);
+    // Check closing CTA text removed
+    await expect(page.getByText('YOUR NEXT ERA STARTS HERE.', { exact: false })).toHaveCount(0);
+    await expect(page.getByText('The precision creator vault. 15,000+ curated video assets', { exact: false })).toHaveCount(0);
   });
 });

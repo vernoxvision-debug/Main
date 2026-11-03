@@ -13,8 +13,8 @@ export const LuxuryFooter: React.FC = () => {
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none rounded-full bg-[radial-gradient(ellipse_at_bottom,rgba(216,168,86,0.08)_0%,transparent_70%)] blur-3xl" />
 
       <div className="max-w-7xl mx-auto flex flex-col items-center text-center relative z-10">
-        {/* Brand Crest, Name & Purposeful Transition Strip */}
-        <div className="flex flex-col items-center mb-6">
+        {/* Brand Crest & Name */}
+        <div className="flex flex-col items-center mb-8 sm:mb-10">
           <img
             src="/logo-dark.png"
             alt="Vernox Vision"
@@ -23,20 +23,7 @@ export const LuxuryFooter: React.FC = () => {
           <h2 className="font-serif text-2xl sm:text-3xl lg:text-4xl tracking-[0.25em] uppercase text-[#FAF8F5]">
             VERNOX VISION
           </h2>
-
-          {/* Section Transition: YOUR NEXT ERA STARTS HERE. */}
-          <div className="flex items-center justify-center gap-3 sm:gap-5 mt-4 mb-1 w-full max-w-lg">
-            <span className="h-[1px] flex-1 max-w-[80px] sm:max-w-[120px] bg-gradient-to-r from-transparent to-[#D8A856]/50" />
-            <span className="font-mono text-[11px] sm:text-xs md:text-sm tracking-[0.32em] uppercase text-[#D8A856] font-semibold select-none">
-              YOUR NEXT ERA STARTS HERE.
-            </span>
-            <span className="h-[1px] flex-1 max-w-[80px] sm:max-w-[120px] bg-gradient-to-l from-transparent to-[#D8A856]/50" />
-          </div>
         </div>
-
-        <p className="max-w-xl font-body text-xs sm:text-sm text-[#9A9893] leading-relaxed mb-8 font-light">
-          The precision creator vault. 15,000+ curated video assets, viral hooks, and content frameworks delivered instantly via private Google Drive.
-        </p>
 
         {/* Navigation & Legal Links */}
         <div className="flex flex-wrap items-center justify-center gap-6 sm:gap-8 text-xs font-mono uppercase tracking-wider text-[#9A9893] mb-10">
