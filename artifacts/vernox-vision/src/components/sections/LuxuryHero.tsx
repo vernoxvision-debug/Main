@@ -4,6 +4,7 @@ import { SITE_CONFIG } from '@/data/site';
 
 /**
  * Eagle shown inside the thin ring on the right.
+ * Same file the header already uses. Change this one line to use another image.
  */
 const HERO_LOGO_SRC = '/logo-dark.png';
 
@@ -13,10 +14,12 @@ const GOLD_DEEP = '#A66A00';
 const GOLD_HIGHLIGHT = '#FFF2B0';
 
 /**
- * Fluid S-curves anchored across the 1440x900 canvas,
- * intersecting cleanly at the two primary flare coordinates:
- *   N1 (1294, 607) - white-hot right flare
- *   N2 ( 808, 720) - warm gold lower-middle flare
+ * Everything on the right is drawn in one 1440 x 900 space and anchored to the
+ * right edge, so circles stay circles and the composition keeps its shape.
+ *
+ * Flare points sit exactly where two lines cross:
+ *   N1 (1294, 607)  white-hot, lower right   (curves 1 and 3)
+ *   N2 ( 808, 720)  warm gold, lower middle  (curves 1 and 2)
  */
 const CURVES: {
   d: string;
@@ -58,13 +61,13 @@ const CURVES: {
   },
 ];
 
-/** Large thin orbital arcs framing the right side */
+/** Large thin orbital arcs (they sway very slightly around their centre). */
 const ARCS: { d: string; width: number; opacity: number; delay: number; sway: number; dur: number }[] = [
   { d: 'M 1101 121 A 392 392 0 0 1 1321 725', width: 0.85, opacity: 0.7, delay: 0.4, sway: 1.8, dur: 38 },
   { d: 'M 1321 41 A 560 560 0 0 1 1541 645', width: 0.65, opacity: 0.4, delay: 0.6, sway: -1.5, dur: 44 },
 ];
 
-/** Tiny floating gold dust dots: [x, y, radius, drift duration in seconds] */
+/** Tiny gold dots: [x, y, radius, drift duration in seconds] */
 const DOTS: [number, number, number, number][] = [
   [917, 412, 2.0, 9],
   [798, 608, 2.8, 11],
@@ -77,7 +80,7 @@ const DOTS: [number, number, number, number][] = [
   [1250, 130, 1.4, 8],
 ];
 
-/** Glowing light flare component */
+/** A glowing point of light with a soft halo and a light streak. */
 const Flare: React.FC<{
   x: number;
   y: number;
@@ -141,7 +144,7 @@ const OrbitalLights: React.FC<{ reduceMotion: boolean }> = ({ reduceMotion }) =>
         </filter>
       </defs>
 
-      {/* Orbital Arcs */}
+      {/* Large thin orbital arcs */}
       {ARCS.map((a, i) => (
         <g key={`arc-${i}`}>
           {!reduceMotion && (
@@ -169,7 +172,7 @@ const OrbitalLights: React.FC<{ reduceMotion: boolean }> = ({ reduceMotion }) =>
         </g>
       ))}
 
-      {/* Flowing Silk Curves */}
+      {/* Flowing curves that cross at the two flare points */}
       {CURVES.map((c, i) => (
         <motion.g
           key={`curve-${i}`}
@@ -222,11 +225,11 @@ const OrbitalLights: React.FC<{ reduceMotion: boolean }> = ({ reduceMotion }) =>
         </motion.g>
       ))}
 
-      {/* Exact Flare Points */}
+      {/* Flare points where the lines cross */}
       <Flare x={1294} y={607} halo={85} streak={130} angle={-4} color={GOLD_HIGHLIGHT} reduceMotion={reduceMotion} dur={7} />
       <Flare x={808} y={720} halo={95} streak={160} angle={-12} color={GOLD} reduceMotion={reduceMotion} dur={9} />
 
-      {/* Small Glowing Nodes */}
+      {/* Two small gold nodes on the arcs and curves */}
       {[
         [1369, 367, 3.5],
         [1391, 572, 3.0],
@@ -241,7 +244,7 @@ const OrbitalLights: React.FC<{ reduceMotion: boolean }> = ({ reduceMotion }) =>
         </g>
       ))}
 
-      {/* Scattered Gold Dust Dots */}
+      {/* Scattered gold dots */}
       {DOTS.map(([x, y, r, dur], i) => (
         <circle key={`dot-${i}`} cx={x} cy={y} r={r} fill={GOLD} opacity="0.55">
           {!reduceMotion && (
@@ -253,7 +256,7 @@ const OrbitalLights: React.FC<{ reduceMotion: boolean }> = ({ reduceMotion }) =>
         </circle>
       ))}
 
-      {/* Eagle inside Thin Gold Ring */}
+      {/* Eagle inside a thin gold ring (tablet and up) */}
       <motion.g
         className="hidden md:block"
         initial={reduceMotion ? false : { opacity: 0 }}
@@ -287,16 +290,17 @@ export const LuxuryHero: React.FC = () => {
   const reduceMotion = useReducedMotion() ?? false;
 
   return (
-    <section className="relative min-h-[90vh] pt-28 sm:pt-36 pb-16 px-4 sm:px-6 lg:px-8 flex flex-col justify-between overflow-hidden bg-[#070709]">
-      {/* Background Cinematic Lighting */}
+    <section className="relative min-h-[calc(100svh-135px)] lg:min-h-[calc(100svh-135px)] pt-20 sm:pt-24 pb-16 px-5 sm:px-8 lg:px-10 flex flex-col justify-center overflow-hidden bg-[#070709]">
+      {/* Open cinematic backdrop: restrained golden ambient lighting */}
       <div className="absolute top-0 right-0 w-[720px] h-[720px] pointer-events-none rounded-full bg-[radial-gradient(ellipse_at_top_right,rgba(255,200,61,0.07)_0%,transparent_70%)] blur-3xl" />
       <div className="absolute bottom-0 left-0 w-[520px] h-[520px] pointer-events-none rounded-full bg-[radial-gradient(ellipse_at_bottom_left,rgba(255,200,61,0.035)_0%,transparent_70%)] blur-3xl" />
 
-      {/* Orbital Golden Lights Background Overlay */}
+      {/* Orbital golden light */}
       <OrbitalLights reduceMotion={reduceMotion} />
 
-      <div className="relative max-w-7xl mx-auto w-full my-auto z-10">
-        <div className="flex flex-col items-start max-w-3xl">
+      <div className="relative max-w-[1410px] mx-auto w-full z-10">
+        {/* Editorial Typography & CTAs */}
+        <div className="flex flex-col items-start max-w-[700px]">
           {/* Micro Tag */}
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.03] border border-white/[0.08] mb-6">
             <span className="w-1.5 h-1.5 rounded-full bg-[#D8A856]" />
@@ -308,17 +312,15 @@ export const LuxuryHero: React.FC = () => {
           {/* Main Headline */}
           <h1
             data-testid="hero-headline"
-            className="font-serif text-4xl sm:text-6xl lg:text-7xl xl:text-8xl text-[#FAF8F5] leading-[1.04] tracking-tight"
+            className="font-serif text-5xl sm:text-6xl lg:text-[5.6rem] xl:text-[6rem] text-[#FAF8F5] leading-[1.08] tracking-tight"
           >
-            <span>Create</span> <br />
-            <span>without limits.</span> <br />
-            <span>Build your</span> <br />
-            <span className="text-gold-gradient italic">vision.</span>
+            <span>Create Without</span> <br />
+            <span className="text-gold-gradient italic">Limits.</span>
           </h1>
 
           {/* Editorial Subtitle */}
           <p className="mt-6 sm:mt-8 max-w-xl font-body text-sm sm:text-base text-[#9A9893] leading-relaxed font-light">
-            Premium digital resources for creators who want to create better content, build their identity and turn ideas into something more.
+            15,000+ creator assets. Endless possibilities. Everything you need to make your next move.
           </p>
 
           {/* CTA Row */}
@@ -342,36 +344,23 @@ export const LuxuryHero: React.FC = () => {
             </a>
           </div>
 
-          {/* Resource Stat Footer */}
-          <div className="mt-10 sm:mt-12 flex items-center gap-3.5 pt-6 border-t border-white/[0.07] w-full max-w-md">
-            <span className="w-8 h-8 shrink-0 rounded-full border border-[#D8A856]/40 flex items-center justify-center">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D8A856]" />
-            </span>
+          {/* Creator trust proof */}
+          <div className="mt-10 sm:mt-12 flex items-center gap-5 pt-6 border-t border-white/[0.08] w-full max-w-xl">
+            <div className="flex items-center -space-x-2.5 shrink-0">
+              <span className="w-9 h-9 rounded-full border border-[#17130B] bg-[#D8A856] text-[#17110A] flex items-center justify-center text-[10px] font-semibold">JD</span>
+              <span className="w-9 h-9 rounded-full border border-[#17130B] bg-[#B9B9B9] text-[#171717] flex items-center justify-center text-[10px] font-semibold">MK</span>
+              <span className="w-9 h-9 rounded-full border border-[#17130B] bg-[#8C7658] text-white flex items-center justify-center text-[10px] font-semibold">AL</span>
+            </div>
             <div className="flex flex-col">
-              <span className="font-mono text-sm font-bold text-[#FAF8F5] tracking-wide">
-                15,000+
+              <span className="font-mono text-lg sm:text-xl font-bold text-[#FAF8F5] tracking-wide leading-none">
+                10,000+
               </span>
-              <span className="font-mono text-[9px] uppercase tracking-widest text-[#9A9893]">
-                RESOURCES · LIFETIME ACCESS
+              <span className="mt-1.5 font-mono text-[9px] uppercase tracking-[0.18em] text-[#B8B4AC]">
+                CREATORS TRUST VERNOX
               </span>
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Scroll Down Indicator */}
-      <div className="relative z-10 w-full text-center mt-12 mb-2">
-        <a
-          href="#vault"
-          className="inline-flex flex-col items-center gap-1.5 text-[#9A9893] hover:text-[#D8A856] transition-colors cursor-pointer no-underline"
-        >
-          <span className="w-5 h-5 rounded-full border border-white/[0.15] flex items-center justify-center text-[10px]">
-            ↓
-          </span>
-          <span className="font-mono text-[9px] uppercase tracking-[0.25em]">
-            SCROLL DOWN
-          </span>
-        </a>
       </div>
     </section>
   );
