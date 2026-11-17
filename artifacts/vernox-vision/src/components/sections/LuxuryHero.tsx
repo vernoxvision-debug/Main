@@ -14,7 +14,7 @@ const DEEP = '#8A5A1E';
 type Pt = [number, number];
 
 type Strand = {
-  s: Pt; // where the line starts (off-screen on the left or bottom)
+  s: Pt; // where the line starts (off-screen on the left)
   e: Pt; // where the line ends (off-screen on the right)
   a: number; // angle in degrees at the bright point (positive = rising to the right)
   k1: number; // how smoothly it approaches the bright point
@@ -27,9 +27,11 @@ type Strand = {
 };
 
 /**
- * Two bundles of fine lines. Every line in a bundle passes through the same
- * bright point at a slightly different angle, so they converge like fibres of
- * light. The drawing space is 1440 x 900, anchored to the right edge.
+ * Two small bundles of fine lines. Every line in a bundle passes through the
+ * same bright point, so the lines gather like fibres of light. All lines enter
+ * from the left edge and leave from the right edge, so none of them can run
+ * into the bottom of the hero. The drawing space is 1440 x 900, anchored to the
+ * right edge.
  */
 const BUNDLES: { id: 'A' | 'B'; F: Pt; grad: string; strands: Strand[] }[] = [
   {
@@ -37,11 +39,9 @@ const BUNDLES: { id: 'A' | 'B'; F: Pt; grad: string; strands: Strand[] }[] = [
     F: [1294, 525], // bright, white-hot
     grad: 'url(#vvBundleA)',
     strands: [
-      { s: [-80, 880], e: [1520, 470], a: 12, k1: 260, k2: 200, w: 1, o: 0.95, delay: 0.1, float: { y: 3, x: 2, dur: 13 } },
-      { s: [-80, 790], e: [1520, 560], a: 7, k1: 240, k2: 220, w: 0.8, o: 0.7, delay: 0.25, float: { y: 3, x: -2, dur: 15 } },
-      { s: [200, 940], e: [1520, 610], a: 18, k1: 220, k2: 180, w: 0.7, o: 0.55, delay: 0.4, float: { y: 2, x: 2, dur: 14 } },
-      { s: [700, 940], e: [1520, 420], a: 34, k1: 160, k2: 200, w: 0.7, o: 0.5, delay: 0.55, float: { y: 2, x: 2, dur: 16 } },
-      { s: [-80, 820], e: [1520, 500], a: 10, k1: 250, k2: 200, w: 2.4, o: 0.2, soft: true, delay: 0.3, float: { y: 3, x: 2, dur: 17 } },
+      { s: [-80, 760], e: [1520, 470], a: 12, k1: 260, k2: 200, w: 1, o: 0.95, delay: 0.1, float: { y: 3, x: 2, dur: 13 } },
+      { s: [-80, 700], e: [1520, 560], a: 7, k1: 240, k2: 220, w: 0.8, o: 0.65, delay: 0.25, float: { y: 3, x: -2, dur: 15 } },
+      { s: [-80, 740], e: [1520, 500], a: 10, k1: 250, k2: 200, w: 2.4, o: 0.18, soft: true, delay: 0.3, float: { y: 3, x: 2, dur: 17 } },
     ],
   },
   {
@@ -49,10 +49,8 @@ const BUNDLES: { id: 'A' | 'B'; F: Pt; grad: string; strands: Strand[] }[] = [
     F: [808, 638], // warm amber, lower middle
     grad: 'url(#vvBundleB)',
     strands: [
-      { s: [-80, 880], e: [1520, 540], a: 8, k1: 240, k2: 220, w: 0.9, o: 0.85, delay: 0.2, float: { y: 3, x: 2, dur: 14 } },
-      { s: [300, 940], e: [1520, 330], a: 26, k1: 170, k2: 230, w: 0.75, o: 0.65, delay: 0.45, float: { y: 3, x: -2, dur: 16 } },
-      { s: [-80, 850], e: [1520, 600], a: -2, k1: 230, k2: 240, w: 0.6, o: 0.45, delay: 0.6, float: { y: 2, x: 2, dur: 15 } },
-      { s: [-80, 800], e: [1520, 580], a: 3, k1: 240, k2: 230, w: 2.2, o: 0.18, soft: true, delay: 0.5, float: { y: 3, x: -2, dur: 18 } },
+      { s: [-80, 820], e: [1520, 540], a: 8, k1: 240, k2: 220, w: 0.9, o: 0.8, delay: 0.2, float: { y: 3, x: 2, dur: 14 } },
+      { s: [-80, 790], e: [1520, 580], a: 3, k1: 240, k2: 230, w: 2.2, o: 0.16, soft: true, delay: 0.5, float: { y: 3, x: -2, dur: 18 } },
     ],
   },
 ];
@@ -94,8 +92,7 @@ const pointAfterFocus = (F: Pt, st: Strand, t: number): Pt => {
 const NODE_REFS: [number, number, number][] = [
   [0, 0, 0.55],
   [0, 1, 0.8],
-  [1, 0, 0.35],
-  [1, 1, 0.5],
+  [1, 0, 0.4],
 ];
 
 /** Large, very faint orbital arcs. Both share the centre (760, 470). */
@@ -108,19 +105,16 @@ const ARCS: { d: string; width: number; opacity: number; delay: number; sway: nu
 const ORBS: [number, number, number, number][] = [
   [917, 330, 8, 0.22],
   [1193, 481, 7, 0.2],
-  [664, 607, 6, 0.18],
   [1100, 250, 7, 0.16],
 ];
 
 /** Sharp tiny sparkles: [x, y, radius, twinkle duration in seconds] */
 const SPARKLES: [number, number, number, number][] = [
   [1369, 285, 2.2, 7],
-  [1190, 745, 1.4, 9],
   [1250, 140, 1.3, 8],
   [960, 120, 1.2, 10],
   [1400, 420, 1.4, 9],
-  [1340, 780, 1.4, 11],
-  [720, 600, 1.2, 8],
+  [720, 560, 1.2, 8],
 ];
 
 /** Gradient peak positions (as a fraction of the 1440 width) for each bundle. */
@@ -154,12 +148,16 @@ const Flare: React.FC<{
   </g>
 );
 
+/** Fades the whole drawing out toward the bottom so nothing ends in a hard cut. */
+const BOTTOM_FADE = 'linear-gradient(to bottom, #000 0%, #000 68%, transparent 100%)';
+
 const OrbitalLights: React.FC<{ reduceMotion: boolean }> = ({ reduceMotion }) => {
   return (
     <svg
       aria-hidden="true"
       focusable="false"
       className="absolute inset-0 w-full h-full pointer-events-none opacity-75 sm:opacity-100"
+      style={{ WebkitMaskImage: BOTTOM_FADE, maskImage: BOTTOM_FADE }}
       viewBox="0 0 1440 900"
       preserveAspectRatio="xMaxYMid slice"
       fill="none"
@@ -264,7 +262,7 @@ const OrbitalLights: React.FC<{ reduceMotion: boolean }> = ({ reduceMotion }) =>
         </g>
       ))}
 
-      {/* The two bundles of fine lines */}
+      {/* The two small bundles of fine lines */}
       {BUNDLES.map((b) =>
         b.strands.map((st, i) => (
           <motion.g
@@ -319,7 +317,7 @@ const OrbitalLights: React.FC<{ reduceMotion: boolean }> = ({ reduceMotion }) =>
         </circle>
       ))}
 
-      {/* Eagle inside a thin ring (tablet and up). No solid fill, just a soft glow. */}
+      {/* Eagle inside a thin ring (tablet and up). No solid fill, just a soft outline. */}
       <motion.g
         className="hidden md:block"
         initial={reduceMotion ? false : { opacity: 0 }}
@@ -355,7 +353,7 @@ export const LuxuryHero: React.FC = () => {
     <section className="relative min-h-[92vh] pt-28 sm:pt-36 pb-16 px-4 sm:px-6 lg:px-8 flex flex-col justify-between overflow-hidden bg-[#070709]">
       {/* Open cinematic backdrop: restrained warm ambient lighting */}
       <div className="absolute top-0 right-0 w-[720px] h-[720px] pointer-events-none rounded-full bg-[radial-gradient(ellipse_at_top_right,rgba(217,154,63,0.06)_0%,transparent_70%)] blur-3xl" />
-      <div className="absolute bottom-0 right-0 w-[640px] h-[640px] pointer-events-none rounded-full bg-[radial-gradient(ellipse_at_bottom_right,rgba(217,154,63,0.05)_0%,transparent_70%)] blur-3xl" />
+      <div className="absolute top-[35%] right-0 w-[640px] h-[640px] pointer-events-none rounded-full bg-[radial-gradient(ellipse_at_center_right,rgba(217,154,63,0.05)_0%,transparent_70%)] blur-3xl" />
 
       {/* Orbital golden light */}
       <OrbitalLights reduceMotion={reduceMotion} />
