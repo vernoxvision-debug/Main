@@ -5,88 +5,130 @@ import { SITE_CONFIG } from '@/data/site';
 /** Eagle shown inside the thin ring. Same file the header uses. */
 const HERO_LOGO_SRC = '/logo-dark.png';
 
-/**
- * Champagne gold palette. To go back to a more saturated gold, change these
- * three values (for example GOLD = '#FFC83D').
- */
-const GOLD = '#E2BC72';
-const GOLD_DEEP = '#9A6F25';
-const GOLD_HIGHLIGHT = '#FFF4D6';
+/** Warm amber-gold palette. Change these four values to retune the whole effect. */
+const AMBER = '#D99A3F';
+const GOLD = '#EBC17A';
+const HOT = '#FFF4DC';
+const DEEP = '#8A5A1E';
 
-/**
- * Everything on the right is drawn in one 1440 x 900 space anchored to the
- * right edge, so circles stay circles. Four long, smooth S-curves cross each
- * other. Real crossings used for the light flares:
- *   F1 (1241, 510)  curves 1 and 3  (bright)
- *   F2 (1019, 581)  curves 1 and 2  (soft)
- */
-const CURVES: {
-  d: string;
-  width: number;
-  opacity: number;
+type Pt = [number, number];
+
+type Strand = {
+  s: Pt; // where the line starts (off-screen on the left or bottom)
+  e: Pt; // where the line ends (off-screen on the right)
+  a: number; // angle in degrees at the bright point (positive = rising to the right)
+  k1: number; // how smoothly it approaches the bright point
+  k2: number; // how smoothly it leaves the bright point
+  w: number; // line width
+  o: number; // line opacity
+  soft?: boolean; // wide, blurred "out of focus" ghost line
   delay: number;
   float: { y: number; x: number; dur: number };
-}[] = [
-  {
-    d: 'M -80 850 C 220 690 520 860 800 700 S 1200 470 1520 520',
-    width: 1.2,
-    opacity: 1,
-    delay: 0.1,
-    float: { y: 4, x: 3, dur: 13 },
-  },
-  {
-    d: 'M -80 600 C 260 760 560 560 860 560 S 1220 760 1520 640',
-    width: 1,
-    opacity: 0.9,
-    delay: 0.3,
-    float: { y: 5, x: -3, dur: 15 },
-  },
-  {
-    d: 'M 360 930 C 640 840 900 760 1100 620 S 1380 360 1520 300',
-    width: 1,
-    opacity: 0.85,
-    delay: 0.5,
-    float: { y: 4, x: 3, dur: 14 },
-  },
-  {
-    d: 'M 900 940 C 1060 820 1160 700 1300 640 S 1440 600 1520 580',
-    width: 0.8,
-    opacity: 0.7,
-    delay: 0.7,
-    float: { y: 3, x: 3, dur: 16 },
-  },
-];
-
-/** Large thin orbital arcs. Both share the same centre (760, 470). */
-const ARCS: { d: string; width: number; opacity: number; delay: number; sway: number; dur: number }[] = [
-  { d: 'M 1289 26 A 690 690 0 0 1 1440 590', width: 0.8, opacity: 0.6, delay: 0.4, sway: 0.8, dur: 38 },
-  { d: 'M 1058 44 A 520 520 0 0 1 1231 689', width: 0.7, opacity: 0.35, delay: 0.6, sway: -0.7, dur: 44 },
-];
-
-/** Tiny bright points that sit on the lines: [x, y] */
-const NODES: [number, number][] = [
-  [1294, 464],
-  [1302, 676],
-  [1415, 599],
-  [800, 700],
-];
-
-/** Scattered gold dust: [x, y, radius, drift duration in seconds] */
-const DOTS: [number, number, number, number][] = [
-  [920, 330, 1.8, 9],
-  [1190, 250, 1.4, 10],
-  [1370, 180, 1.6, 11],
-  [1400, 420, 1.5, 9],
-  [1150, 740, 1.4, 12],
-  [1330, 780, 1.5, 10],
-  [700, 620, 1.4, 11],
-  [960, 120, 1.4, 8],
-];
+};
 
 /**
- * A soft point of light: gentle bloom, a short tapered glint and a small
- * white core. The bloom uses screen blending so it adds light instead of
- * leaving a muddy disc.
+ * Two bundles of fine lines. Every line in a bundle passes through the same
+ * bright point at a slightly different angle, so they converge like fibres of
+ * light. The drawing space is 1440 x 900, anchored to the right edge.
+ */
+const BUNDLES: { id: 'A' | 'B'; F: Pt; grad: string; strands: Strand[] }[] = [
+  {
+    id: 'A',
+    F: [1294, 525], // bright, white-hot
+    grad: 'url(#vvBundleA)',
+    strands: [
+      { s: [-80, 880], e: [1520, 470], a: 12, k1: 260, k2: 200, w: 1, o: 0.95, delay: 0.1, float: { y: 3, x: 2, dur: 13 } },
+      { s: [-80, 790], e: [1520, 560], a: 7, k1: 240, k2: 220, w: 0.8, o: 0.7, delay: 0.25, float: { y: 3, x: -2, dur: 15 } },
+      { s: [200, 940], e: [1520, 610], a: 18, k1: 220, k2: 180, w: 0.7, o: 0.55, delay: 0.4, float: { y: 2, x: 2, dur: 14 } },
+      { s: [700, 940], e: [1520, 420], a: 34, k1: 160, k2: 200, w: 0.7, o: 0.5, delay: 0.55, float: { y: 2, x: 2, dur: 16 } },
+      { s: [-80, 820], e: [1520, 500], a: 10, k1: 250, k2: 200, w: 2.4, o: 0.2, soft: true, delay: 0.3, float: { y: 3, x: 2, dur: 17 } },
+    ],
+  },
+  {
+    id: 'B',
+    F: [808, 638], // warm amber, lower middle
+    grad: 'url(#vvBundleB)',
+    strands: [
+      { s: [-80, 880], e: [1520, 540], a: 8, k1: 240, k2: 220, w: 0.9, o: 0.85, delay: 0.2, float: { y: 3, x: 2, dur: 14 } },
+      { s: [300, 940], e: [1520, 330], a: 26, k1: 170, k2: 230, w: 0.75, o: 0.65, delay: 0.45, float: { y: 3, x: -2, dur: 16 } },
+      { s: [-80, 850], e: [1520, 600], a: -2, k1: 230, k2: 240, w: 0.6, o: 0.45, delay: 0.6, float: { y: 2, x: 2, dur: 15 } },
+      { s: [-80, 800], e: [1520, 580], a: 3, k1: 240, k2: 230, w: 2.2, o: 0.18, soft: true, delay: 0.5, float: { y: 3, x: -2, dur: 18 } },
+    ],
+  },
+];
+
+/** Geometry helpers: build each line from two smooth curves joined at the bright point. */
+const strandGeom = (F: Pt, st: Strand) => {
+  const rad = (st.a * Math.PI) / 180;
+  const dx = Math.cos(rad);
+  const dy = -Math.sin(rad);
+  const [sx, sy] = st.s;
+  const [ex, ey] = st.e;
+  const [fx, fy] = F;
+  const c1: Pt = [sx + (fx - sx) * 0.4, sy + (fy - sy) * 0.05];
+  const c2: Pt = [fx - dx * st.k1, fy - dy * st.k1];
+  const c3: Pt = [fx + dx * st.k2, fy + dy * st.k2];
+  const c4: Pt = [ex - (ex - fx) * 0.4, ey + (fy - ey) * 0.1];
+  return { s: st.s, c1, c2, f: F, c3, c4, e: st.e };
+};
+
+const strandPath = (F: Pt, st: Strand): string => {
+  const g = strandGeom(F, st);
+  return (
+    `M ${g.s[0]} ${g.s[1]} C ${g.c1[0]} ${g.c1[1]} ${g.c2[0]} ${g.c2[1]} ${g.f[0]} ${g.f[1]} ` +
+    `C ${g.c3[0]} ${g.c3[1]} ${g.c4[0]} ${g.c4[1]} ${g.e[0]} ${g.e[1]}`
+  );
+};
+
+/** Point on the second curve (after the bright point), t from 0 to 1. */
+const pointAfterFocus = (F: Pt, st: Strand, t: number): Pt => {
+  const g = strandGeom(F, st);
+  const u = 1 - t;
+  return [
+    u * u * u * g.f[0] + 3 * u * u * t * g.c3[0] + 3 * u * t * t * g.c4[0] + t * t * t * g.e[0],
+    u * u * u * g.f[1] + 3 * u * u * t * g.c3[1] + 3 * u * t * t * g.c4[1] + t * t * t * g.e[1],
+  ];
+};
+
+/** Sharp little nodes that sit exactly on a line: [bundle index, strand index, t along the line] */
+const NODE_REFS: [number, number, number][] = [
+  [0, 0, 0.55],
+  [0, 1, 0.8],
+  [1, 0, 0.35],
+  [1, 1, 0.5],
+];
+
+/** Large, very faint orbital arcs. Both share the centre (760, 470). */
+const ARCS: { d: string; width: number; opacity: number; delay: number; sway: number; dur: number }[] = [
+  { d: 'M 1289 26 A 690 690 0 0 1 1440 590', width: 0.7, opacity: 0.4, delay: 0.4, sway: 0.8, dur: 38 },
+  { d: 'M 1058 44 A 520 520 0 0 1 1231 689', width: 0.6, opacity: 0.22, delay: 0.6, sway: -0.7, dur: 44 },
+];
+
+/** Soft out-of-focus orbs: [x, y, radius, brightness] */
+const ORBS: [number, number, number, number][] = [
+  [917, 330, 8, 0.22],
+  [1193, 481, 7, 0.2],
+  [664, 607, 6, 0.18],
+  [1100, 250, 7, 0.16],
+];
+
+/** Sharp tiny sparkles: [x, y, radius, twinkle duration in seconds] */
+const SPARKLES: [number, number, number, number][] = [
+  [1369, 285, 2.2, 7],
+  [1190, 745, 1.4, 9],
+  [1250, 140, 1.3, 8],
+  [960, 120, 1.2, 10],
+  [1400, 420, 1.4, 9],
+  [1340, 780, 1.4, 11],
+  [720, 600, 1.2, 8],
+];
+
+/** Gradient peak positions (as a fraction of the 1440 width) for each bundle. */
+const peakStops = (p: number): number[] => [0, p * 0.55, p - 0.07, p, Math.min(p + 0.06, 0.99), 1];
+
+/**
+ * Soft point of light: warm bloom (screen-blended so it adds light), a short
+ * tapered glint and a tiny white-hot core.
  */
 const Flare: React.FC<{
   x: number;
@@ -100,15 +142,15 @@ const Flare: React.FC<{
   <g>
     <circle cx={x} cy={y} r={halo} fill="url(#vvHalo)" style={{ mixBlendMode: 'screen' }}>
       {!reduceMotion && (
-        <animate attributeName="opacity" values="0.65;1;0.65" dur={`${dur}s`} repeatCount="indefinite" />
+        <animate attributeName="opacity" values="0.7;1;0.7" dur={`${dur}s`} repeatCount="indefinite" />
       )}
     </circle>
     <g transform={`rotate(${angle} ${x} ${y})`}>
-      <ellipse cx={x} cy={y} rx={streak} ry="1" fill="url(#vvStreak)" />
-      <ellipse cx={x} cy={y} rx="1" ry={streak * 0.35} fill="url(#vvStreakV)" opacity="0.5" />
+      <ellipse cx={x} cy={y} rx={streak} ry="0.9" fill="url(#vvStreak)" />
+      <ellipse cx={x} cy={y} rx="0.9" ry={streak * 0.3} fill="url(#vvStreakV)" opacity="0.4" />
     </g>
-    <circle cx={x} cy={y} r="7" fill={GOLD_HIGHLIGHT} opacity="0.35" filter="url(#vvCoreGlow)" />
-    <circle cx={x} cy={y} r="2.4" fill={GOLD_HIGHLIGHT} />
+    <circle cx={x} cy={y} r="6" fill={HOT} opacity="0.3" filter="url(#vvCoreGlow)" />
+    <circle cx={x} cy={y} r="2" fill={HOT} />
   </g>
 );
 
@@ -117,54 +159,67 @@ const OrbitalLights: React.FC<{ reduceMotion: boolean }> = ({ reduceMotion }) =>
     <svg
       aria-hidden="true"
       focusable="false"
-      className="absolute inset-0 w-full h-full pointer-events-none opacity-70 sm:opacity-100"
+      className="absolute inset-0 w-full h-full pointer-events-none opacity-75 sm:opacity-100"
       viewBox="0 0 1440 900"
       preserveAspectRatio="xMaxYMid slice"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
       <defs>
-        {/* Lines stay softly visible everywhere, and a bright band of light slowly sweeps along them */}
-        <linearGradient id="vvLine" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1440" y2="0">
-          <stop offset="0" stopColor={GOLD} stopOpacity="0.55" />
-          <stop offset="0.3" stopColor={GOLD} stopOpacity="0.6" />
-          <stop offset="0.5" stopColor={GOLD_HIGHLIGHT} stopOpacity="1" />
-          <stop offset="0.7" stopColor={GOLD} stopOpacity="0.6" />
-          <stop offset="1" stopColor={GOLD} stopOpacity="0.55" />
-          {!reduceMotion && (
-            <animateTransform
-              attributeName="gradientTransform"
-              type="translate"
-              from="-900 0"
-              to="900 0"
-              dur="11s"
-              repeatCount="indefinite"
-            />
-          )}
+        {/* Each bundle fades out toward its ends and glows brightest at its bright point */}
+        {(
+          [
+            { id: 'vvBundleA', p: 1294 / 1440 },
+            { id: 'vvBundleB', p: 808 / 1440 },
+          ] as const
+        ).map(({ id, p }) => {
+          const o = peakStops(p);
+          return (
+            <linearGradient key={id} id={id} gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1440" y2="0">
+              <stop offset={o[0]} stopColor={DEEP} stopOpacity="0.12" />
+              <stop offset={o[1]} stopColor={AMBER} stopOpacity="0.5" />
+              <stop offset={o[2]} stopColor={GOLD} stopOpacity="0.75" />
+              <stop offset={o[3]} stopColor={HOT} stopOpacity="1">
+                {!reduceMotion && (
+                  <animate attributeName="stop-opacity" values="1;0.72;1" dur="8s" repeatCount="indefinite" />
+                )}
+              </stop>
+              <stop offset={o[4]} stopColor={GOLD} stopOpacity="0.6" />
+              <stop offset={o[5]} stopColor={AMBER} stopOpacity="0.18" />
+            </linearGradient>
+          );
+        })}
+
+        <linearGradient id="vvArc" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="1440" y2="0">
+          <stop offset="0" stopColor={AMBER} stopOpacity="0.5" />
+          <stop offset="1" stopColor={GOLD} stopOpacity="0.9" />
         </linearGradient>
 
-        {/* Bloom around the bright points */}
+        {/* Warm bloom */}
         <radialGradient id="vvHalo">
-          <stop offset="0" stopColor={GOLD_HIGHLIGHT} stopOpacity="0.6" />
-          <stop offset="0.18" stopColor={GOLD} stopOpacity="0.25" />
-          <stop offset="0.5" stopColor={GOLD} stopOpacity="0.06" />
-          <stop offset="1" stopColor={GOLD} stopOpacity="0" />
+          <stop offset="0" stopColor="#FFE9B8" stopOpacity="0.55" />
+          <stop offset="0.2" stopColor={AMBER} stopOpacity="0.22" />
+          <stop offset="0.55" stopColor={AMBER} stopOpacity="0.05" />
+          <stop offset="1" stopColor={AMBER} stopOpacity="0" />
         </radialGradient>
 
         {/* Glints that fade out at both ends */}
         <linearGradient id="vvStreak" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stopColor={GOLD_HIGHLIGHT} stopOpacity="0" />
-          <stop offset="0.5" stopColor={GOLD_HIGHLIGHT} stopOpacity="0.95" />
-          <stop offset="1" stopColor={GOLD_HIGHLIGHT} stopOpacity="0" />
+          <stop offset="0" stopColor={HOT} stopOpacity="0" />
+          <stop offset="0.5" stopColor={HOT} stopOpacity="0.9" />
+          <stop offset="1" stopColor={HOT} stopOpacity="0" />
         </linearGradient>
         <linearGradient id="vvStreakV" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stopColor={GOLD_HIGHLIGHT} stopOpacity="0" />
-          <stop offset="0.5" stopColor={GOLD_HIGHLIGHT} stopOpacity="0.9" />
-          <stop offset="1" stopColor={GOLD_HIGHLIGHT} stopOpacity="0" />
+          <stop offset="0" stopColor={HOT} stopOpacity="0" />
+          <stop offset="0.5" stopColor={HOT} stopOpacity="0.9" />
+          <stop offset="1" stopColor={HOT} stopOpacity="0" />
         </linearGradient>
 
-        <filter id="vvLineGlow" x="-10%" y="-10%" width="120%" height="120%">
-          <feGaussianBlur stdDeviation="4" />
+        <filter id="vvSoftLine" x="-10%" y="-10%" width="120%" height="120%">
+          <feGaussianBlur stdDeviation="1.8" />
+        </filter>
+        <filter id="vvOrb" x="-200%" y="-200%" width="500%" height="500%">
+          <feGaussianBlur stdDeviation="3.2" />
         </filter>
         <filter id="vvCoreGlow" x="-400%" y="-400%" width="900%" height="900%">
           <feGaussianBlur stdDeviation="3" />
@@ -175,9 +230,14 @@ const OrbitalLights: React.FC<{ reduceMotion: boolean }> = ({ reduceMotion }) =>
       </defs>
 
       {/* Soft light behind the eagle */}
-      <circle cx="1080" cy="390" r="120" fill="url(#vvHalo)" opacity="0.35" style={{ mixBlendMode: 'screen' }} />
+      <circle cx="1080" cy="390" r="120" fill="url(#vvHalo)" opacity="0.3" style={{ mixBlendMode: 'screen' }} />
 
-      {/* Large thin orbital arcs */}
+      {/* Out-of-focus orbs (depth) */}
+      {ORBS.map(([x, y, r, b], i) => (
+        <circle key={`orb-${i}`} cx={x} cy={y} r={r} fill={AMBER} opacity={b} filter="url(#vvOrb)" />
+      ))}
+
+      {/* Very faint large orbital arcs */}
       {ARCS.map((a, i) => (
         <g key={`arc-${i}`}>
           {!reduceMotion && (
@@ -194,10 +254,9 @@ const OrbitalLights: React.FC<{ reduceMotion: boolean }> = ({ reduceMotion }) =>
           )}
           <motion.path
             d={a.d}
-            stroke="url(#vvLine)"
+            stroke="url(#vvArc)"
             strokeWidth={a.width}
             strokeLinecap="round"
-            vectorEffect="non-scaling-stroke"
             initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
             animate={{ pathLength: 1, opacity: a.opacity }}
             transition={reduceMotion ? { duration: 0 } : { duration: 3.2, delay: a.delay, ease: [0.22, 1, 0.36, 1] }}
@@ -205,68 +264,62 @@ const OrbitalLights: React.FC<{ reduceMotion: boolean }> = ({ reduceMotion }) =>
         </g>
       ))}
 
-      {/* Long smooth curves */}
-      {CURVES.map((c, i) => (
-        <motion.g
-          key={`curve-${i}`}
-          animate={reduceMotion ? undefined : { y: [0, -c.float.y, 0], x: [0, c.float.x, 0] }}
-          transition={
-            reduceMotion
-              ? undefined
-              : { duration: c.float.dur, repeat: Infinity, ease: 'easeInOut', delay: i * 0.6 }
-          }
-        >
-          <path
-            d={c.d}
-            stroke="url(#vvLine)"
-            strokeWidth={c.width * 3}
-            strokeLinecap="round"
-            vectorEffect="non-scaling-stroke"
-            filter="url(#vvLineGlow)"
-            opacity="0.18"
-          />
-          <motion.path
-            d={c.d}
-            stroke="url(#vvLine)"
-            strokeWidth={c.width}
-            strokeLinecap="round"
-            vectorEffect="non-scaling-stroke"
-            initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
-            animate={{ pathLength: 1, opacity: c.opacity }}
-            transition={reduceMotion ? { duration: 0 } : { duration: 2.8, delay: c.delay, ease: [0.22, 1, 0.36, 1] }}
-          />
-        </motion.g>
-      ))}
+      {/* The two bundles of fine lines */}
+      {BUNDLES.map((b) =>
+        b.strands.map((st, i) => (
+          <motion.g
+            key={`${b.id}-${i}`}
+            animate={reduceMotion ? undefined : { y: [0, -st.float.y, 0], x: [0, st.float.x, 0] }}
+            transition={
+              reduceMotion
+                ? undefined
+                : { duration: st.float.dur, repeat: Infinity, ease: 'easeInOut', delay: i * 0.5 }
+            }
+          >
+            <motion.path
+              d={strandPath(b.F, st)}
+              stroke={b.grad}
+              strokeWidth={st.w}
+              strokeLinecap="round"
+              filter={st.soft ? 'url(#vvSoftLine)' : undefined}
+              initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: st.o }}
+              transition={reduceMotion ? { duration: 0 } : { duration: 3, delay: st.delay, ease: [0.22, 1, 0.36, 1] }}
+            />
+          </motion.g>
+        ))
+      )}
 
-      {/* Light flares at two real crossings */}
-      <Flare x={1241} y={510} halo={78} streak={78} angle={-6} reduceMotion={reduceMotion} dur={7} />
-      <Flare x={1019} y={581} halo={58} streak={60} angle={-14} reduceMotion={reduceMotion} dur={9} />
+      {/* Light at the two convergence points */}
+      <Flare x={1294} y={525} halo={70} streak={80} angle={-6} reduceMotion={reduceMotion} dur={7} />
+      <Flare x={808} y={638} halo={55} streak={95} angle={-10} reduceMotion={reduceMotion} dur={9} />
 
-      {/* Tiny bright points on the lines */}
-      {NODES.map(([x, y], i) => (
-        <g key={`node-${i}`}>
-          <circle cx={x} cy={y} r="9" fill={GOLD} opacity="0.4" filter="url(#vvNodeGlow)">
-            {!reduceMotion && (
-              <animate attributeName="opacity" values="0.2;0.5;0.2" dur={`${6 + i * 1.3}s`} repeatCount="indefinite" />
-            )}
-          </circle>
-          <circle cx={x} cy={y} r="1.8" fill={GOLD_HIGHLIGHT} />
-        </g>
-      ))}
+      {/* Sharp little nodes that sit exactly on lines */}
+      {NODE_REFS.map(([bi, si, t], i) => {
+        const b = BUNDLES[bi];
+        const [x, y] = pointAfterFocus(b.F, b.strands[si], t);
+        return (
+          <g key={`node-${i}`}>
+            <circle cx={x} cy={y} r="8" fill={AMBER} opacity="0.4" filter="url(#vvNodeGlow)">
+              {!reduceMotion && (
+                <animate attributeName="opacity" values="0.2;0.5;0.2" dur={`${6 + i * 1.3}s`} repeatCount="indefinite" />
+              )}
+            </circle>
+            <circle cx={x} cy={y} r="1.8" fill={HOT} />
+          </g>
+        );
+      })}
 
-      {/* Gold dust */}
-      {DOTS.map(([x, y, r, dur], i) => (
-        <circle key={`dot-${i}`} cx={x} cy={y} r={r} fill={GOLD} opacity="0.5">
+      {/* Tiny sharp sparkles */}
+      {SPARKLES.map(([x, y, r, dur], i) => (
+        <circle key={`sp-${i}`} cx={x} cy={y} r={r} fill={GOLD} opacity="0.7">
           {!reduceMotion && (
-            <>
-              <animate attributeName="cy" values={`${y};${y - 6};${y}`} dur={`${dur}s`} repeatCount="indefinite" />
-              <animate attributeName="opacity" values="0.25;0.6;0.25" dur={`${dur}s`} repeatCount="indefinite" />
-            </>
+            <animate attributeName="opacity" values="0.25;0.85;0.25" dur={`${dur}s`} repeatCount="indefinite" />
           )}
         </circle>
       ))}
 
-      {/* Eagle inside a thin ring. The dark fill keeps lines from crossing it. */}
+      {/* Eagle inside a thin ring (tablet and up). No solid fill, just a soft glow. */}
       <motion.g
         className="hidden md:block"
         initial={reduceMotion ? false : { opacity: 0 }}
@@ -280,8 +333,7 @@ const OrbitalLights: React.FC<{ reduceMotion: boolean }> = ({ reduceMotion }) =>
               }
         }
       >
-        <circle cx="1080" cy="390" r="64" fill="#070709" />
-        <circle cx="1080" cy="390" r="64" stroke={GOLD} strokeOpacity="0.35" strokeWidth="0.8" vectorEffect="non-scaling-stroke" />
+        <circle cx="1080" cy="390" r="64" stroke={AMBER} strokeOpacity="0.4" strokeWidth="0.8" />
         <image
           href={HERO_LOGO_SRC}
           x="1051"
@@ -301,9 +353,9 @@ export const LuxuryHero: React.FC = () => {
 
   return (
     <section className="relative min-h-[92vh] pt-28 sm:pt-36 pb-16 px-4 sm:px-6 lg:px-8 flex flex-col justify-between overflow-hidden bg-[#070709]">
-      {/* Open cinematic backdrop: restrained golden ambient lighting */}
-      <div className="absolute top-0 right-0 w-[720px] h-[720px] pointer-events-none rounded-full bg-[radial-gradient(ellipse_at_top_right,rgba(226,188,114,0.06)_0%,transparent_70%)] blur-3xl" />
-      <div className="absolute bottom-0 left-0 w-[520px] h-[520px] pointer-events-none rounded-full bg-[radial-gradient(ellipse_at_bottom_left,rgba(226,188,114,0.03)_0%,transparent_70%)] blur-3xl" />
+      {/* Open cinematic backdrop: restrained warm ambient lighting */}
+      <div className="absolute top-0 right-0 w-[720px] h-[720px] pointer-events-none rounded-full bg-[radial-gradient(ellipse_at_top_right,rgba(217,154,63,0.06)_0%,transparent_70%)] blur-3xl" />
+      <div className="absolute bottom-0 right-0 w-[640px] h-[640px] pointer-events-none rounded-full bg-[radial-gradient(ellipse_at_bottom_right,rgba(217,154,63,0.05)_0%,transparent_70%)] blur-3xl" />
 
       {/* Orbital golden light */}
       <OrbitalLights reduceMotion={reduceMotion} />
